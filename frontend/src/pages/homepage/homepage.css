@@ -1,0 +1,203 @@
+/* .home {
+  display: flex;
+  padding: 20px;
+  gap: 700px;
+} */
+
+/* .homeMain {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+} */
+.home {
+  margin: 0;
+  padding: 0;
+}
+
+.homeMain {
+  margin: 0 auto;
+  padding: 0;
+  /* Optional for layout */
+  width: 100%;
+}
+.topControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+   margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+
+
+
+
+body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+         background-color: #A79A90;
+      color: #111;
+    }
+
+    /* header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      background-color: #c1ab96;
+      font-family: 'Playfair Display', serif;
+    } */
+
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #111;
+      margin: 0 ;
+      font-weight: 500;
+      
+    } 
+    .stack {
+  width: 100%;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+    /* .hero {
+      text-align: top;
+      padding: 0rem 2rem 3rem; 
+      background-color: linear-gradient(to bottom, #3b3a36, #a99d92);
+      
+    }  */
+    /* .hero { */
+  /* padding-top: 4rem ; */
+  /* margin-top: 0;
+  text-align: center;
+  background: linear-gradient(to bottom, #3b3a36, #a99d92);
+  color: white;
+  font-family: 'Wix Madefor Display', serif;
+   min-height: 70vh;
+    margin-bottom: 0; */
+  /* padding-bottom: 2rem;  */
+/* } */
+
+.hero {
+  background: linear-gradient(to bottom, #2f2c29, #a89f94);
+  color: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+   font-family: 'Wix Madefor Display', serif;
+}
+
+
+    /* .hero h1 {
+      font-size: 7rem;
+      font-family: 'Wix Madefor Display', serif;
+      margin-bottom: 1rem;
+      font-weight: 400;
+       margin-top: 0;
+    } */
+
+    .hero h1 {
+  font-size: 7rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #fff, #e6e1db);
+  -webkit-background-clip: text;
+  font-weight: 400;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInDown 0.8s ease-out;
+   font-family: 'Wix Madefor Display', serif;
+}
+
+
+    .hero .desc-box {
+      background-color: #B9B2A8;
+      max-width: 2500px;
+      max-height:max-content;
+      margin: 0 auto;
+      padding: 1.5rem;
+      border-radius: 10px;
+       font-family: 'Wix Madefor Display', serif;
+    }
+
+    .hero .desc-box p {
+      font-size: 1rem;
+      line-height: 1.6;
+       font-family: 'Wix Madefor Display', serif;
+    }
+
+    .hero button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #3b2f2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+       font-family: 'Wix Madefor Display', serif;
+    }
+    .hero-bg-icon {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  width: 100px;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none; /* Prevent it from being clickable */
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #4e342e;
+  max-width: 700px;
+  margin: auto;
+   font-family: 'Wix Madefor Display', serif;
+}
+
+.hero .btn {
+  background-color: #4e342e;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+   font-family: 'Wix Madefor Display', serif;
+}
+
+.hero .btn:hover {
+  background-color: #6d4c41;
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
+    

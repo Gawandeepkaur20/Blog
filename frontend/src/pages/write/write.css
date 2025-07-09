@@ -1,0 +1,382 @@
+/* .write {
+  padding-top: 50px;
+ margin-bottom:800px;
+}
+
+.writeImg {
+  margin-left: 150px;
+  width: 70vw;
+  max-height: 500px; /* Allow larger images */
+  /* border-radius: 10px;
+  object-fit: contain; /* ✅ SHOW FULL IMAGE without cropping */
+  /* background-color: #A79A90; /* optional for contrast */
+
+.seoBox {
+  background: #fff;
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,.08);
+}
+/* .writeImg {
+  width: 100%;
+  max-width: 50%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-left:250px;
+  margin-right: 150px;
+} */
+
+.writeForm {
+  position: relative;
+ margin-top: 20px;
+}
+
+.writeFormGroup {
+ 
+  margin-left: 150px;
+  display: flex;
+  align-items: center;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.writeText {
+  height: 400px; /* or whatever size you prefer */
+  margin-bottom: 20px;
+  background-color: white;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.writeText {
+  height: 700px;
+  min-height: 300px;
+  margin-bottom: 0;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.ql-container {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding-bottom: 20px;
+  overflow: hidden;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+
+/* Ensure clean container and no overlap */
+.writeText .ql-container {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 500px;
+  background-color: white;
+}
+
+/* Clean white background with padding inside the editor */
+.ql-editor {
+  min-height: 300px;
+  padding: 20px;
+  background-color: white;
+  box-sizing: border-box;
+  border: none;
+  
+}
+
+/* Remove weird background below editor */
+.writeFormGroup {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 0;
+  box-shadow: none;
+  border: none;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.tag-display {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  margin-top:0;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+.writeIcon {
+  width: 25px;
+  height: 25px;
+  font-size: 20px;
+  border: 1px solid;
+  border-radius: 50%;
+  color: rgb(129, 125, 125);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.writeInput {
+  font-size: 30px;
+  border: none;
+  padding: 20px;
+  width: 70vw;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.writeInput::placeholder {
+  color: rgb(189, 185, 185);
+  font-weight: 400;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.writeInput:focus {
+  outline-style: none;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+/* .writeText {
+  min-height: 500px;
+  padding: 0;
+  background-color: transparent; /* Remove this white background */
+  /* overflow: hidden; /* Fix shadow overflow */
+  /* margin-bottom: 40px; /* Add spacing from next elements */
+  /* font-family: 'Wix Madefor Display',serif;  */
+
+
+
+.writeSubmit {
+  position: absolute;
+  top: 20px;
+  right: 50px;
+  color: white;
+  background-color: #3b2f2f;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: 'Wix Madefor Display',serif;
+}
+.grammar-suggestions {
+  margin-top: 20px;
+  background: #f8f8f8;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+}
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.ai-box {
+  margin: 20px 150px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.ai-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.tag-display {
+  margin-left: 150px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  width: 70vw;
+  box-sizing: border-box;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+
+
+
+.ai-generator-link {
+  text-decoration: none;
+}
+
+
+.ai-generator {
+  padding: 10px 20px;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  right: 150px;
+  color: white;
+  background-color: #3b2f2f;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.image-generator{
+ 
+  padding: 10px 20px;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  right: 300px;
+  color: white;
+  background-color: #3b2f2f;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+}
+ .summarize-button {
+  margin-top: 10px;
+  margin-left: 150px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.writeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.summary-box {
+  margin-top: 20px;
+  margin-left: 150px;
+  padding: 12px;
+  background: #f0f0f0;
+  border-left: 5px solid #007bff;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.lang-select {
+  margin-right: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Wix Madefor Display',serif;
+} 
+
+
+/* .write {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.writeFormGroup {
+  margin-bottom: 1.5rem;
+}
+
+.writeImg {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.seo-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.seo-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.writeSubmit,
+.ai-generator,
+.image-generator,
+.accept-btn,
+.reject-btn,
+.seo-generate-btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.writeSubmit {
+  background-color: #28a745;
+  color: white;
+}
+
+.ai-generator {
+  background-color: #007bff;
+  color: white;
+}
+
+.image-generator {
+  background-color: #6f42c1;
+  color: white;
+}
+
+.accept-btn {
+  background-color: #20c997;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.seo-generate-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
+} */

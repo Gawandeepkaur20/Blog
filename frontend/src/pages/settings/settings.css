@@ -1,0 +1,106 @@
+.settings {
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(143, 140, 140, 0.543); /* Match your blog background */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 0;
+  box-sizing: border-box;
+}
+
+.settingsWrapper {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 90%;
+  height: 500px;
+  max-width: 1500px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.settingsTitle {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.settingsTitle span {
+  font-size: 22px;
+  font-weight: 600;
+  color: #4b4237; /* Dark brown from your theme */
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.settingsTitle span:hover {
+  color: #b4845c; /* Golden accent */
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.settingsForm label {
+  margin-top: 15px;
+  font-weight: 500;
+  color: #4b4237;
+  font-size: 16px;
+}
+
+.settingsForm input {
+  padding: 12px 14px;
+  border: 1px solid #cbbeb5;
+  border-radius: 8px;
+  font-size: 15px;
+  margin-top: 6px;
+  background-color: #faf8f6;
+  color: #333;
+  transition: border 0.3s ease;
+}
+
+.settingsForm input:focus {
+  border-color: #b4845c;
+  outline: none;
+}
+
+.settingsSubmitButton {
+  margin-top: 30px;
+  background-color: #4b4237;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.settingsSubmitButton:hover {
+  background-color: #5e4d3f;
+}
+
+.settingsTitleDelete {
+  color: #e53935;
+  font-weight: 600;
+}
+
+.settingsTitleDelete:hover {
+  text-decoration: underline;
+}
+
+.link {
+  text-decoration: none;
+  color: #4b4237;
+  font-weight: 500;
+}
+
+.link:hover {
+  color: #b4845c;
+  text-decoration: underline;
+}

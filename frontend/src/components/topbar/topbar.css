@@ -1,0 +1,158 @@
+.top {
+  width: 100%;
+  height: 50px;
+background-color: #B9B2A8;
+  position: sticky;
+   margin-bottom: 0;
+  padding-bottom: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  z-index: 999;
+ font-family: 'Wix Madefor Display', serif;
+}
+
+.topLeft,
+.topRight {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topIcon {
+  font-size: 20px;
+  margin-right: 10px;
+  color: #444;
+  cursor: pointer;
+}
+
+.topCenter {
+  flex: 6;
+}
+
+.topList {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topListItem {
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 200px;
+  cursor: pointer;
+  color:black;
+  font-family: 'Wix Madefor Display', serif;
+}
+.link:hover{
+color:aliceblue;
+}
+
+.topListItem:hover{
+    color: gray;
+}
+.link{
+  color:black;
+  text-decoration: none;
+}
+
+span{
+  font-size: 18px;
+  font-weight: 300;
+  color:black;
+}
+.topImg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover;
+  margin-left: 10px;
+  border: 2px solid #ccc;
+  transition: transform 0.3s ease;
+}
+
+.topImg:hover {
+  transform: scale(1.05);
+}
+
+.welcomeText {
+  font-size: 20px;
+  color: #333;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.profileLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.topSearchIcon {
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+}
+.language-switcher {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 5px 12px;
+  width: fit-content;
+  margin: 50px;
+}
+
+.globe-icon {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.language-switcher select {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+}
+.translate-button {
+  background-color: teal;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right:70px;
+ 
+}
+.translateWrapper {
+  display: flex;
+  align-items: right;
+  margin-left: 70px;
+  margin-right: 10px;
+}
+
+.google-translator-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.google-translator-container img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.custom-language-select {
+  padding: 4px 6px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+
+

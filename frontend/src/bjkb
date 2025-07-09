@@ -1,0 +1,96 @@
+// components/BlogAIWriter.jsx
+import React, { useState } from "react";
+import axios from "axios";
+import "./blogenerator.css";
+
+const BlogAIWriter = () => {
+  const [topic, setTopic] = useState("");
+  const [generatedBlog, setGeneratedBlog] = useState("");
+  const [suggestedTitle, setSuggestedTitle] = useState("");
+  const [tags, setTags] = useState([]);
+  const [loadingBlog, setLoadingBlog] = useState(false);
+  const [loadingSEO, setLoadingSEO] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleGenerateBlog = async () => {
+    if (!topic.trim()) return;
+    setLoadingBlog(true);
+    setGeneratedBlog("");
+    setSuggestedTitle("");
+    setTags([]);
+    setError("");
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/generate-blog", {
+        topic,
+      });
+      setGeneratedBlog(res.data.blog);
+    } catch (err) {
+      console.error("Error generating blog:", err);
+      setError("❌ Failed to generate blog.");
+    }
+    setLoadingBlog(false);
+  };
+
+  const handleGenerateSEO = async () => {
+    if (!generatedBlog.trim()) {
+      setError("Please generate the blog first.");
+      return;
+    }
+
+    setLoadingSEO(true);
+    setError("");
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/seo-suggestions", {
+        content: generatedBlog,
+      });
+
+      setSuggestedTitle(res.data.title);
+      setTags(res.data.tags);
+    } catch (err) {
+      console.error("SEO Suggestion failed:", err);
+      setError("❌ Failed to get SEO suggestions.");
+    }
+    setLoadingSEO(false);
+  };
+
+  return (
+    <div className="blog-generator">
+      <h2>🧠 Gemini AI Blog Writer + SEO Tool</h2>
+
+      <input
+        type="text"
+        placeholder="Enter blog topic..."
+        value={topic}
+        onChange={(e) => setTopic(e.target.value)}
+      />
+
+      <button onClick={handleGenerateBlog} disabled={loadingBlog}>
+        {loadingBlog ? "Generating Blog..." : "Generate Blog"}
+      </button>
+
+      {generatedBlog && (
+        <div className="output">
+          <h3>📝 Generated Blog:</h3>
+          <p>{generatedBlog}</p>
+
+          <button onClick={handleGenerateSEO} disabled={loadingSEO}>
+            {loadingSEO ? "Generating SEO..." : "Get Smart Title & Tags"}
+          </button>
+
+          {suggestedTitle && (
+            <div className="seo-output">
+              <p><strong>Suggested Title:</strong> {suggestedTitle}</p>
+              <p><strong>Tags:</strong> {tags.join(", ")}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {error && <p className="error">{error}</p>}
+    </div>
+  );
+};
+
+export default BlogAIWriter;

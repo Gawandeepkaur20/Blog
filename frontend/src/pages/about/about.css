@@ -1,0 +1,78 @@
+.about {
+  background: rgba(143, 140, 140, 0.543);
+  min-height: 100vh;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.aboutContent {
+  background-color: #8b847e;
+  padding: 2rem 3rem;
+  max-width: 850px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  color: #333;
+  line-height: 1.8;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.aboutContent h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3b2f2f;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.aboutContent h2 {
+  margin-top: 2rem;
+  color: #34495e;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.aboutContent h2::before {
+  content: "✨";
+  margin-right: 0.6rem;
+  font-size: 1.4rem;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.aboutContent ul {
+  list-style: none;
+  padding-left: 1.2rem;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.aboutContent li {
+  background: #ecf0f1;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.aboutContent li::before {
+  content: "✔️";
+  margin-right: 0.8rem;
+  font-family:'Wix Madefor Display',serif;
+}
+
+.thanks {
+  margin-top: 2rem;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #3b2f2f;
+  text-align: center;
+  font-family:'Wix Madefor Display',serif;
+}

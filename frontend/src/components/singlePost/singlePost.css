@@ -1,0 +1,148 @@
+.singlePost {
+  flex: 9;
+  font-family: 'Wix Madefor Dispaly',serif;
+}
+
+
+ .quillEditor {
+  margin-top: 20px;
+  height: 300px;
+  font-family: 'Wix Madefor Dispaly',serif;
+}
+
+.ql-editor {
+  min-height: 200px;
+  font-family: 'Wix Madefor Dispaly',serif;
+} 
+
+.singlePostWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.singlePostImg {
+   margin-left: 150px;
+  width: 70vw;
+  max-height: 500px; /* Allow larger images */
+  border-radius: 10px;
+  object-fit: contain; /* ✅ SHOW FULL IMAGE without cropping */
+   background-color: #A79A90; 
+  align-items: center;
+  margin-left: 50px;
+  margin-right:50px;
+
+}
+
+.postContainer {
+  margin-top: 10px;
+  width: 90%;
+  /* height: 600px; */
+  max-width: 800px;
+  background-color: #c4bcb4; 
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Wix Madefor Display', serif;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.postHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+/* Title row: title + icons */
+.postTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+/* Meta row: author + time */
+.postMetaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #555;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+/* Title styling */
+.singlePostTitle {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 0;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+/* Edit icons */
+.singlePostEdit {
+  display: flex;
+  gap: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-bottom: 55px;
+  margin-right:0px;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+.singlePostEdit i:hover {
+  color: #555;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+.postTags {
+  background: #f0f0f0;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-family: 'Wix Madefor Display', serif;
+}
+.editTagsInput {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #c4bcb4; 
+}
+
+.editTitleInput {
+  width: 100%;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  border: 1px solid #c4bcb4; 
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.quillEditor {
+  margin-top: 20px;
+  height: 300px;
+  font-family: 'Wix Madefor Dispaly',serif;
+}
+
+.ql-editor {
+  min-height: 150px;
+  font-size: 1rem;
+  font-family: 'Wix Madefor Dispaly',serif;
+} 
+.singlePostButton {
+  margin-top: 50px;        /* Add space from editor */
+  padding: 10px 20px;      /* Proper button padding */
+  color: white;
+  background-color: #3b2f2f;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Wix Madefor Display', serif;
+  align-self: flex-start;  /* Align button to the left of container */
+}

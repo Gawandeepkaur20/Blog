@@ -1,0 +1,241 @@
+/* .register {
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("https://images.pexels.com/photos/317355/pexels-photo-317355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-size: cover;
+} */
+
+.register-page {
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+.custom-alert {
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  background-color: #e74c3c;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 20px 20px 20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateX(100%);
+  animation: slideInAlert 0.5s forwards;
+}
+
+@keyframes slideInAlert {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeOutAlert {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 2px;  /* Reduced spacing */
+  margin-bottom: 4px; /* Optional: add bottom spacing between error and next field */
+  font-weight: 500;
+}
+/* Left Branding Section */
+.left-section {
+  flex: 1;
+ background-color: #8b847e;
+  color: white;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  font-family: 'Wix Madefor Display',serif;
+}
+.zenticle-title {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+ font-family: 'Wix Madefor Display',serif;
+  z-index: 2;
+}
+
+.girl-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 80%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.text-below-img {
+  margin-top: 30px;
+  text-align: center;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.text-below-img h2 {
+  font-size: 30px;
+  margin-bottom: 5px;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.text-below-img p {
+  font-size: 18px;
+ font-family: 'Wix Madefor Display',serif;
+ margin-top: 0;
+}
+
+.left-section h1 {
+  font-size: 50px;
+  /* margin-left: 80px;
+  margin-top:0px;
+  margin-right: 30px; */
+  font-family: 'Wix Madefor Display',serif;
+   
+  
+}
+.text-below-img{
+  margin-top: 400px;
+  margin-left: 0px;
+  margin-right: 0;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+
+
+.left-section img{
+  position: absolute;
+}
+
+
+
+
+
+/* Right Form Section */
+.right-section {
+  flex: 1;
+  padding: 200px;
+  background-color: rgba(143, 140, 140, 0.543);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+   font-family: 'Wix Madefor Display',serif;
+}
+
+.right-section h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-family: 'Wix Madefor Display',serif;
+
+}
+
+.right-section p {
+  margin-bottom: 20px;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.preview-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Less vertical spacing between fields */
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white; 
+  color: #333;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.terms {
+  font-size: 13px;
+  font-family: 'Wix Madefor Display',serif;
+}
+.link-term{
+  font-size: 17px;
+  color:#282727;
+  text-decoration: none;
+}
+
+
+.signup-btn {
+   background-color: #3b2f2f;
+    color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: 'Wix Madefor Display',serif;
+}
+.link-signup{
+  color:white;
+  text-decoration:none;
+}
+
+.link-signin{
+  color:#3b2f2f;
+  text-decoration:line;
+}
+.link-signin:hover{
+color:brown;
+}
+
+.signin-link {
+  text-align: center;
+  font-size: 17px;
+  margin-top: 10px;
+  font-family: 'Wix Madefor Display',serif;
+ 
+
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  font-family: 'Wix Madefor Display',serif;
+}
+
+.social-buttons button {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  font-family: 'Wix Madefor Display',serif;
+}

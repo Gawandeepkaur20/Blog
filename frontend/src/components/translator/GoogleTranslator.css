@@ -1,0 +1,40 @@
+/* /* .google-translate-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 20px;
+  margin-bottom: 30px;
+} */
+
+/* .google-translate-icon {
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+.google-translator-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 16px;
+}
+
+/* .custom-language-select {
+  padding: 5px;
+  font-size: 14px;
+} */
+
+ /* .custom-language-select {
+  padding: 4px 6px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}  */
+
+/* #google_translate_element {
+  display: none;
+}
+
+/* Remove default list bullet from navbar item */
+/* li {
+  list-style: none;
+} */ 
