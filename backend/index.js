@@ -5,7 +5,7 @@ const path = require("path");
 const cors = require("cors");
 const multer = require("multer");
 const fs = require("fs");
-
+const newsletterRoutes = require('./router/newsletter.route');
 const user = require("./router/user.router");
 const category = require("./router/category.route");
 const post = require("./router/post.routes");
@@ -31,13 +31,15 @@ const corsOptions = {
   },
 };
 
+
+
 // ✅ Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 
 // ✅ Serve uploaded images statically
 app.use("/images", express.static(path.join(__dirname, "public/images")));
-app.use("/api", require("./router/generateImage"));
+app.use('/newsletter', newsletterRoutes);
 
 // ✅ API Routes
 app.use("/user", user);
@@ -45,6 +47,8 @@ app.use("/category", category);
 app.use("/post", post);
 app.use("/api", seoRoutes);
 app.use("/api", blogRoutes);
+
+
 
 // ✅ Ensure upload folders exist
 const ensureDirExists = (dir) => {

@@ -9,7 +9,7 @@
 }
 
 .aboutContent {
-  background-color: #8b847e;
+  background-color: #B9B2A8;
   padding: 2rem 3rem;
   max-width: 850px;
   border-radius: 12px;
@@ -52,7 +52,7 @@
 }
 
 .aboutContent li {
-  background: #ecf0f1;
+  background: #c4bcb4; 
   padding: 0.6rem 1rem;
   border-radius: 8px;
   margin-bottom: 0.6rem;

@@ -45,7 +45,16 @@ function Topbar(props) {
         <i className="topIcon fab fa-instagram-square"></i>
         <i className="topIcon fab fa-pinterest-square"></i>
         <i className="topIcon fab fa-twitter-square"></i>
-      </div>
+      
+     <Link to="/" className="zenticle-logo-link">
+  <img
+    src="/assets/Zenticle-logo.png"
+    alt="logo"
+    className="zenticle-logo"
+  />
+</Link>
+    </div>
+      
 
       <div className="topCenter">
         <ul className="topList">
@@ -91,19 +100,15 @@ function Topbar(props) {
           )
         ) : (
           <ul className="topList">
-            <li className="topListItem">
-              <Link className="link" to="/login">LOGIN</Link>
-            </li>
-            <li className="topListItem">
-              <Link className="link" to="/register">REGISTER</Link>
-            </li>
-          </ul>
+  <li className="topListItem auth-links">
+    <Link className="link" to="/login"> LOGIN</Link>
+    <span className="divider">/ </span>
+    <Link className="link" to="/register">REGISTER</Link>
+  </li>
+</ul>
         )}
 
-        <div className="translateWrapper">
-          <GoogleTranslate />
-        </div>
-
+        
         <i className="topSearchIcon fas fa-search"></i>
       </div>
     </div>

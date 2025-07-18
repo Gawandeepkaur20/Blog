@@ -6,15 +6,33 @@ background-color: #B9B2A8;
    margin-bottom: 0;
   padding-bottom: 0;
   top: 0;
+  left:0px;
   display: flex;
   align-items: center;
   z-index: 999;
+   padding: 0 20px;
  font-family: 'Wix Madefor Display', serif;
 }
 
-.topLeft,
+.zenticle-logo {
+  height: 50px;
+  width: 200px;
+  margin-top:0px;
+  
+  transition: transform 0.3s ease;
+}
+
+.zenticle-logo:hover {
+  transform: scale(1.05);
+}
+.topLeft{
+  flex: 1;
+ 
+  
+}
+
 .topRight {
-  flex: 3;
+  flex: 4;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +46,10 @@ background-color: #B9B2A8;
 }
 
 .topCenter {
-  flex: 6;
+  flex: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .topList {
@@ -38,8 +59,16 @@ background-color: #B9B2A8;
   padding: 0;
   list-style: none;
 }
+.topLeft, .topRight {
+  flex: 1;
+}
+
+.topCenter {
+  flex: 2;
+}
 
 .topListItem {
+  flex:3;
   margin-right: 20px;
   font-size: 18px;
   font-weight: 200px;
@@ -119,40 +148,14 @@ span{
   cursor: pointer;
   outline: none;
 }
-.translate-button {
-  background-color: teal;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right:70px;
- 
-}
-.translateWrapper {
-  display: flex;
-  align-items: right;
-  margin-left: 70px;
-  margin-right: 10px;
-}
 
-.google-translator-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
-.google-translator-container img {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
 
-.custom-language-select {
-  padding: 4px 6px;
-  font-size: 13px;
-  border-radius: 4px;
-}
+
+
+
+
+
 
 
 

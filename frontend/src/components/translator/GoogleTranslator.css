@@ -1,40 +1,80 @@
-/* /* .google-translate-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: 20px;
-  margin-bottom: 30px;
-} */
+.dt-style-picker-wrapper {
+  position: fixed;
+  top: 60px;
+  right: 2px;
+  z-index: 9999;
+  font-family: 'Wix Madefor Display', serif;
+}
 
-/* .google-translate-icon {
-  font-size: 20px;
+
+.google-translate-icon img {
+  width: 48px;          
+  height: 48px;         
+  padding: 8px;        
+  border-radius: 14px;
+    border-bottom-right-radius: 4px;
+  background-color: #B9B2A8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
-  user-select: none;
-}
-.google-translator-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: 16px;
 }
 
-/* .custom-language-select {
-  padding: 5px;
+.google-translate-icon img:hover {
+  transform: scale(1.1);
+  background-color:#B9B2A8;
+}
+
+
+.google-translate-icon {
+  font-size: 20px;
+  color: #ffffff;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.google-translate-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Dropdown */
+select.custom-language-select {
+  font-family: 'Wix Madefor Display', serif;
+  background-color: #B9B2A8;
+  color: #3b2f2f;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
   font-size: 14px;
-} */
-
- /* .custom-language-select {
-  padding: 4px 6px;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}  */
-
-/* #google_translate_element {
-  display: none;
+  font-weight: 500;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Remove default list bullet from navbar item */
-/* li {
-  list-style: none;
-} */ 
+select.custom-language-select:hover {
+  background-color: #a79e92;
+}
+
+/* Hide Google default iframe UI */
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.skiptranslate iframe,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0 !important;
+}
+.goog-logo-link,
+.goog-te-gadget {
+  display: none !important;
+}
+.topListItem .link {
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+}

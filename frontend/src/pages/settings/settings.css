@@ -1,22 +1,29 @@
+
+
 .settings {
   width: 100%;
-  min-height: 100vh;
-  background-color: rgba(143, 140, 140, 0.543); /* Match your blog background */
+  min-height: 120vh;
+   background: url("https://plus.unsplash.com/premium_photo-1684581214880-2043e5bc8b8b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmxvZyUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D") center/cover no-repeat;
+  /* background-color: rgba(143, 140, 140, 0.543); Match your blog background */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 40px 0;
   box-sizing: border-box;
+  font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsWrapper {
-  background: #ffffff;
+  background: rgba(143, 141, 141, 0.85); /* Light white background with 85% opacity */
+  color: #3b2f2f;
+   box-shadow: 0 6px 6px 6px rgb(117, 115, 115);
   padding: 40px;
-  border-radius: 12px;
+  border-radius: 15px;
   width: 90%;
-  height: 500px;
-  max-width: 1500px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  height: auto; /* change this to auto so it adapts to content */
+  max-width: 1000px;
+  min-height: 600px;
+  
 }
 
 .settingsTitle {
@@ -25,82 +32,170 @@
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 30px;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsTitle span {
   font-size: 22px;
   font-weight: 600;
-  color: #4b4237; /* Dark brown from your theme */
+  color: #3b2f2f; /* Dark brown from your theme */
   cursor: pointer;
   transition: 0.3s;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsTitle span:hover {
-  color: #b4845c; /* Golden accent */
+  color: #7c6f65; /* Golden accent */
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsForm {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsForm label {
   margin-top: 15px;
   font-weight: 500;
-  color: #4b4237;
+  color: #3b2f2f;
   font-size: 16px;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsForm input {
   padding: 12px 14px;
+align-items: center;
   border: 1px solid #cbbeb5;
   border-radius: 8px;
   font-size: 15px;
   margin-top: 6px;
   background-color: #faf8f6;
-  color: #333;
+  color: #3b2f2f;
   transition: border 0.3s ease;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsForm input:focus {
   border-color: #b4845c;
   outline: none;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsSubmitButton {
   margin-top: 30px;
-  background-color: #4b4237;
+  background-color: #463d3d;
   color: #fff;
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 20px;
   transition: background 0.3s;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsSubmitButton:hover {
   background-color: #5e4d3f;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsTitleDelete {
   color: #e53935;
   font-weight: 600;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
 .settingsTitleDelete:hover {
+  color: #7c6f65;
   text-decoration: underline;
+   font-family: 'Wix Madefor Display ',serif;
 }
 
-.link {
+.link-profile{
   text-decoration: none;
-  color: #4b4237;
-  font-weight: 500;
+  color: #3b2f2f;
+  font-weight: 600;
+   font-size: 20px;
+    font-family: 'Wix Madefor Display ',serif;
 }
 
-.link:hover {
-  color: #b4845c;
+.link-profile:hover {
+  color: #7c6f65;
   text-decoration: underline;
+   font-family: 'Wix Madefor Display ',serif;
 }
+.settingsPP {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+   font-family: 'Wix Madefor Display ',serif;
+}
+.settingsPP img {
+  width: 120px;         /* increased from 80px */
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 2px;
+   font-family: 'Wix Madefor Display ',serif;
+}
+.settingsForm .profile-label {
+  font-weight: 600;
+  text-align: center;
+  color: #3b2f2f;
+  font-size: 20px;
+  margin-bottom: 10px;
+   font-family: 'Wix Madefor Display ',serif;
+}
+
+.settingsForm .username-label,
+.settingsForm .email-label,
+.settingsForm .password-label ,
+.settingsForm .bio-label {
+  font-weight: 600;
+  font-family: 'Wix Madefor Display ',serif;
+  color: #3b2f2f;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.settingsSubmitButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+   font-family: 'Wix Madefor Display ',serif;
+}
+.settingsPPIcon {
+  font-size: 24px;
+  color: #3b2f2f;
+  cursor: pointer;
+   font-family: 'Wix Madefor Display ',serif;
+}
+
+
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: 'Wix Madefor Display', serif;
+  font-size: 1rem;
+  color: #3b2f2f;
+}
+.uploadProfileBtn {
+  display: inline-block;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: #b2acac;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.uploadProfileBtn:hover {
+  background-color: #898581;
+}
+

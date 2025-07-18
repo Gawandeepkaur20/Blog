@@ -56,6 +56,25 @@
   margin-bottom: 1rem;
   font-family: 'Wix Madefor Display', serif;
 }
+.postAuthor {
+  font-size: 1rem;
+  color: #3b2f2f;
+  font-weight: 600;
+  gap:5px;
+  font-family: 'Wix Madefor Display', serif;
+}
+.author-link {
+  color: #3b2f2f;
+  font-weight: 600;
+  text-decoration: none;
+  
+  font-family: 'Wix Madefor Display', serif;
+}
+
+.author-link:hover {
+  text-decoration: underline;
+}
+
 
 /* Title row: title + icons */
 .postTitleRow {
@@ -63,6 +82,7 @@
   justify-content: space-between;
   align-items: center;
   font-family: 'Wix Madefor Display', serif;
+  
 }
 
 /* Meta row: author + time */
@@ -99,12 +119,25 @@
   font-family: 'Wix Madefor Display', serif;
 }
 
-.postTags {
+/* .postTags {
   background: #f0f0f0;
   padding: 0.6rem 1rem;
   border-radius: 8px;
   margin-top: 1rem;
   font-family: 'Wix Madefor Display', serif;
+} */
+.postTags {
+  margin-top: 15px;
+}
+
+.tagBadge {
+  display: inline-block;
+  background-color: #eee;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 8px;
+  font-size: 0.9rem;
+  color: #333;
 }
 .editTagsInput {
   margin-top: 1rem;
@@ -146,3 +179,27 @@
   font-family: 'Wix Madefor Display', serif;
   align-self: flex-start;  /* Align button to the left of container */
 }
+.share-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.share-buttons p{
+  font-weight: 300;
+}
+
+.copyLinkBtn {
+  background-color: #94938f;
+  border: none;
+  color: #3b2f2f;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Wix Madefor Display', serif;
+}
+
+.copyLinkBtn:hover {
+  background-color: #a79b91;
+}
+

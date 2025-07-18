@@ -6,6 +6,8 @@ import { injectModels } from "../../Redux/injectModel";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { BlogContext } from "../../context/BlogContext";
+import { toast } from "react-toastify";
+
 
 function Write(props) {
   const navigate = useNavigate();
@@ -29,6 +31,16 @@ function Write(props) {
 
   const { user, getUser } = props.auth;
   const { blogData, setBlogData } = useContext(BlogContext);
+  
+const [showImagePromptInput, setShowImagePromptInput] = useState(false);
+const [customImagePrompt, setCustomImagePrompt] = useState("");
+const [showPrompt, setShowPrompt] = useState(false);
+
+const togglePromptBox = () => {
+  setShowPrompt((prev) => !prev);
+};
+
+
 
   useEffect(() => {
     if (blogData.title || blogData.content) {
@@ -38,6 +50,8 @@ function Write(props) {
       setBlogData({ title: "", content: "", tags: [] });
     }
   }, [blogData, setBlogData]);
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -64,49 +78,141 @@ function Write(props) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!user || !user.username) return navigate("/login");
+  e.preventDefault();
 
-    const filename = await uploadImage();
+  if (!user || !user.username) return navigate("/login");
 
-    const newPost = {
-      username: user.username,
-      title,
-      desc,
-      tags,
-      photo: filename || generatedImage,
-    };
+  // Validate required fields
+  if (!title.trim() || !desc.trim()) {
+    toast.error("Title and content are required.", {
+      position: "top-left",
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#B9B2A8",
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+    return;
+  }
 
-    try {
-      const response = await props.posts.createPost(newPost);
-      if (response?.success) navigate("/");
-    } catch (error) {
-      console.error("Creating Post error:", error);
-      alert("Something went wrong. Please try again.");
-    }
+  let filename = "";
+  
+
+  
+  const newPost = {
+    username: user.username,
+    title,
+    desc,
+    tags,
+    photo: filename || generatedImage,
   };
-
-  const handleGenerateBlog = async () => {
-    if (!topic.trim()) return;
-    setLoadingBlog(true);
-    setGeneratedBlog("");
-    setSuggestedTitle("");
-    setTags([]);
-    setError("");
-
-    try {
-      const res = await axios.post("http://localhost:5000/api/generate-blog", { topic });
-      const blog = res.data.blog || "";
-      setGeneratedBlog(blog);
-      setDesc(blog);
-      setShowSEO(true);
-    } catch (err) {
-      console.error("Error generating blog:", err);
-      setError("Failed to generate blog.");
-    } finally {
-      setLoadingBlog(false);
+console.log("Creating Post Payload:", newPost);
+  try {
+    const response = await props.posts.createPost(newPost);
+    if (response?.success) {
+      toast.success(" Blog published!", {
+        position: "top-left",
+        autoClose: 3000,
+        style: {
+          marginTop: "50px",
+          backgroundColor: "#d4edda",
+          color: "#155724",
+          fontFamily: "'Wix Madefor Display', serif"
+        }
+      });
+      navigate("/");
+    } else {
+      toast.error(response?.message || "Failed to publish blog.", {
+        position: "top-left",
+        style: {
+          marginTop: "50px",
+          backgroundColor: "#f8d7da",
+          color: "#721c24",
+          fontFamily: "'Wix Madefor Display', serif"
+        }
+      });
     }
-  };
+  } catch (error) {
+    console.error("Creating Post error:", error);
+    toast.error("Something went wrong while publishing.", {
+      position: "top-left",
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#f8d7da",
+        color: "#721c24",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+  }
+  
+};
+
+
+
+const handleGenerateBlog = async () => {
+  if (!topic.trim()) return;
+
+  // Show loading toast on the left
+  const toastId = toast.loading("✍️ Generating blog...", {
+    position: "top-left",
+    style: {
+       marginTop: "50px",
+      backgroundColor: "#B9B2A8", // your light theme
+      color: "#3b2f2f",           // dark text
+      fontFamily: "'Wix Madefor Display', serif"
+    }
+  });
+
+  setLoadingBlog(true);
+  setGeneratedBlog("");
+  setSuggestedTitle("");
+  setTags([]);
+  setError("");
+
+  try {
+    const res = await axios.post("http://localhost:5000/api/generate-blog", { topic });
+    const blog = res.data.blog || "";
+
+    setGeneratedBlog(blog);
+    setDesc(blog);
+    setShowSEO(true);
+
+    toast.update(toastId, {
+      render: " Blog generated!",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000,
+      position: "top-left",
+      style: {
+          marginTop: "50px",
+        backgroundColor:"#B9B2A8", // dark background
+        color:  "#3b2f2f",              // white text
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+  } catch (err) {
+    console.error("Error generating blog:", err);
+    setError("Failed to generate blog.");
+
+    toast.update(toastId, {
+      render: "Error generating blog!",
+      type: "error",
+      isLoading: false,
+      autoClose: 3000,
+      position: "top-left",
+      style: {
+          marginTop: "50px",
+        backgroundColor: "#B9B2A8", // error background
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+  } finally {
+    setLoadingBlog(false);
+  }
+};
+
 
   const handleGenerateSEO = async () => {
     if (!generatedBlog.trim()) {
@@ -132,19 +238,7 @@ function Write(props) {
     }
   };
 
-  const handleImageGenerate = async () => {
-    if (!title) return alert("Please enter a topic first.");
-    try {
-      setImageLoading(true);
-      const res = await axios.post("http://localhost:5000/api/generate-image", { prompt: title });
-      setGeneratedImage(res.data.imageUrl);
-    } catch (err) {
-      console.error("Image generation failed:", err);
-      alert("Failed to generate image.");
-    } finally {
-      setImageLoading(false);
-    }
-  };
+  
 
   const handleAIGenerate = () => {
     setShowTopicInput(true);
@@ -154,10 +248,129 @@ function Write(props) {
     setError("");
   };
 
+
+
+
+// Trigger this on button click
+const handleImageGenerate = async () => {
+  const prompt = customImagePrompt.trim() || title || desc.slice(0, 100);
+  
+  if (!prompt) {
+    toast.error(" Please enter a prompt to generate an image.", {
+      position: "top-left",
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#3b2f2f",
+        color:  "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+    return;
+  }
+
+  await fetchUnsplashImage(prompt);
+};
+
+
+ 
+
+const fetchUnsplashImage = async (prompt) => {
+  const query = prompt;
+  if (!title && !desc) {
+    toast.error("❗ Please enter content before generating an image.", {
+      position: "top-left",
+      style: {
+          marginTop: "50px",
+        backgroundColor:"#B9B2A8" ,
+        color:  "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+    return;
+  }
+
+  const toastId = toast.loading("🖼️ Generating image...", {
+    position: "top-left",
+    style: {
+        marginTop: "50px",
+      backgroundColor: "#B9B2A8",
+      color: "#3b2f2f",
+      fontFamily: "'Wix Madefor Display', serif"
+    }
+  });
+
+  setImageLoading(true);
+  setGeneratedImage("");
+
+  try {
+    const query = title || desc.slice(0, 100);
+    const res = await axios.get("https://api.unsplash.com/photos/random", {
+      params: { query, orientation: "landscape" },
+      headers: {
+        Authorization: `Client-ID 7jvInlMHF51ykGDUFmXZ0K5wEfIQgT78JHJnd3DqkdU`,
+      },
+    });
+
+    const imageUrl = res.data?.urls?.regular;
+    if (imageUrl) {
+      setGeneratedImage(imageUrl);
+      toast.update(toastId, {
+        render: " Image generated successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+        position: "top-left",
+        style: {
+            marginTop: "50px",
+          backgroundColor: "#B9B2A8",
+          color: "#3b2f2f",
+          fontFamily: "'Wix Madefor Display', serif"
+        }
+      });
+    } else {
+      toast.update(toastId, {
+        render: " No image found for the query.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        position: "top-left",
+        style: {
+            marginTop: "50px",
+          backgroundColor: "#B9B2A8",
+          color: "#3b2f2f",
+          fontFamily: "'Wix Madefor Display', serif"
+        }
+      });
+    }
+  } catch (err) {
+    console.error("Unsplash image fetch failed:", err);
+    toast.update(toastId, {
+      render: " Failed to fetch image from Unsplash.",
+      type: "error",
+      isLoading: false,
+      autoClose: 3000,
+      position: "top-left",
+      style: {
+          marginTop: "50px",
+        backgroundColor: "#B9B2A8",
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+  } finally {
+    setImageLoading(false);
+  }
+};
+
+
+
+
+
   const handleAccept = () => {
     setTitle(suggestedTitle);
     setShowTopicInput(false);
     setShowSEO(false);
+       setTags([...tags]); 
   };
 
   const handleReject = () => {
@@ -168,9 +381,10 @@ function Write(props) {
     setSuggestedTitle("");
     setTags([]);
     setShowTopicInput(false);
-    setShowSEO(false);
+    setShowSEO(true);
     setError("");
   };
+  
 
   return (
    
@@ -213,59 +427,92 @@ function Write(props) {
             onChange={(e) => setTitle(e.target.value)}
           />
         )}
-      </div>
-
-      <div className="writeFormGroup">
-        <ReactQuill
-          className="writeInput"
-          theme="snow"
-          value={desc}
-          onChange={setDesc}
-          placeholder="Tell your story..."
-        />
-      </div>
-
-      {/* SEO Section */}
-      {showSEO && (
-        <div className="seo-section">
-          <button
-            type="button"
-            className="seo-generate-btn"
-            onClick={handleGenerateSEO}
-            disabled={loadingSEO}
-          >
-            {loadingSEO ? "Analyzing..." : "Generate SEO Title & Tags"}
-          </button>
-
-          {suggestedTitle && (
-            <div className="seo-box">
-              <p><strong>Suggested Title:</strong> {suggestedTitle}</p>
-              <p><strong>Tags:</strong> {Array.from(new Set(tags)).join(", ")}</p>
-
-              <div className="button-group">
-                <button className="accept-btn" type="button" onClick={handleAccept}>
-                  Accept
-                </button>
-                <button className="reject-btn" type="button" onClick={handleReject}>
-                  Reject
-                </button>
-              </div>
-            </div>
-          )}
-
-          <div className="button-row">
+        
+        <div className="button-row">
             <button className="writeSubmit" type="submit" disabled={uploading}>
               {uploading ? "Publishing..." : "Publish"}
             </button>
             <button type="button" className="ai-generator" onClick={handleAIGenerate}>
               AI Blog Generator
             </button>
-            <button type="button" className="image-generator" onClick={handleImageGenerate}>
-              {imageLoading ? "Generating..." : "AI Image Generator"}
+
+ </div>
+<div className="image-generator">
+  <button type="button" onClick={togglePromptBox} className="ai-generator-button">
+    AI Image Generator
+  </button>
+
+  {showPrompt && (
+    <div className="prompt-box">
+      <label htmlFor="imagePrompt">Enter a prompt for the image:</label>
+      <input
+        type="text"
+        id="imagePrompt"
+       value={customImagePrompt}
+      onChange={(e) => setCustomImagePrompt(e.target.value)}
+      placeholder="e.g. Developer writing blog at night"
+      />
+        <button type="button" onClick={handleImageGenerate}>
+      {imageLoading ? "Generating..." : "Generate Image"}
+    </button>
+    </div>
+  )}
+</div>
+
+
+         
+     
+      </div>
+     
+      <div className="editorBox">
+  <ReactQuill
+    className="writeEditor"
+    theme="snow"
+    value={desc}
+    onChange={setDesc}
+    placeholder="Tell your story..."
+  />
+{tags.length > 0 && (
+  <div className="tag-display">
+    <strong>Tags:</strong> {tags.join(", ")}
+  </div>
+)}
+
+  {showSEO && (
+    <div className="seo-section">
+      <button
+        type="button"
+        className="seo-generate-btn"
+        onClick={handleGenerateSEO}
+        disabled={loadingSEO}
+      >
+        {loadingSEO ? "Analyzing..." : "Generate SEO Title & Tags"}
+      </button>
+
+      {suggestedTitle && (
+        <div className="seo-box">
+          
+          <p><strong>Suggested Title:</strong> {suggestedTitle}</p>
+          <p><strong>Tags:</strong> {Array.from(new Set(tags)).join(", ")}</p>
+
+          <div className="button-group">
+            <button className="accept-btn" type="button" onClick={handleAccept}>
+              Accept
+            </button>
+            <button className="reject-btn" type="button" onClick={handleReject}>
+              Reject
             </button>
           </div>
+        </div>
+      )}
 
-          {error && <p className="error">{error}</p>}
+      {error && <p className="error">{error}</p>}
+    </div>
+  )}
+</div>
+
+
+           
 
           {grammarSuggestions.length > 0 && (
             <div className="grammar-suggestions">
@@ -287,8 +534,8 @@ function Write(props) {
               <p>{summary}</p>
             </div>
           )}
-        </div>
-      )}
+       
+     
     </form>
   
 

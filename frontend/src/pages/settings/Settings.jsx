@@ -1,162 +1,215 @@
+import React from "react";
 import "./settings.css";
-import Sidebar from "../../components/sidebar/Sidebar";
+
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { injectModels } from "../../Redux/injectModel";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Settings(props) {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [file, setFile] = useState(null);
-  // const PF = "https://radheblog-production.up.railway.app/images/"
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [bio, setBio] = useState("");
 
-  // const [success, setSuccess] = useState(true);
 
   const { user, getUser } = props.auth;
+
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token && !user) {
       getUser();
+    } else if (user) {
+      setUsername(user.username || "");
+      setEmail(user.email || "");
+       setBio(user.bio || "");
     }
-  }, []);
+  }, [user]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
+    if (!window.confirm("Are you sure you want to delete your account?")) 
+      
+      return;
+
     try {
-      if (!user || !user._id) {
-        console.error("User ID not found.");
-        return;
-      }
+      if (!user || !user._id) return;
+
       const response = await props.auth.deleteUser(user._id);
-      console.log(response, "response for deleting user");
       if (response && response.success !== false) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("isAuthenticated");
+        toast.success("Account deleted successfully!", {   
+      position: "top-left",
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#B9B2A8",
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
         navigate("/signup");
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
     if (!user) {
+      toast.error("You must be logged in to update your account.", {  
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#B9B2A8",
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
       navigate("/login");
+
       return;
     }
 
-    const updatedUser = {
-      username,
-      email,
-      password,
-      
-    };
+    setLoading(true);
 
-    // if (file) {
-    //   const data =new FormData();
-    //   const filename = Date.now() + file.name;
-    //   data.append("name", filename);
-    //   data.append("file", file);
-    //   updatedUser.photo = filename;
-    //   try {
-    //     await axios.post("https://blogapp-6huo.onrender.com/upload", data);
-
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
+    const updatedUser = { username, email, password ,bio};
 
     try {
-      const response = await props.auth.update(user._id, updatedUser);
-      console.log("Response from setting :", response);
+      if (file) {
+        const data = new FormData();
+        data.append("file", file);
+        const res = await axios.post("http://localhost:5000/upload/profile", data);
+        if (res.data.success) {
+          updatedUser.profilePic = res.data.filename;
+          toast.success("Profile picture updated successfully!", {   
+      position: "top-left",
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#B9B2A8",
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+        }
+      }
 
+      const response = await props.auth.update(user._id, updatedUser);
       if (response && response.success === true) {
+           
         navigate("/");
       }
     } catch (error) {
-      console.error("Updating user details error:", error);
-      alert("Something went wrong. Please try again.");
+      console.error("Update error:", error);
+     
+     toast.alert("Something went wrong. Try again.", {
+      position: "top-left",
+      style: {
+        marginTop: "50px",
+        backgroundColor: "#B9B2A8",
+        color: "#3b2f2f",
+        fontFamily: "'Wix Madefor Display', serif"
+      }
+    });
+    } finally {
+      setLoading(false);
     }
   };
+
+  const PF = "http://localhost:5000/images/profiles/";
+
   return (
     <div className="settings">
+      
       <div className="settingsWrapper">
-       <div className="settingsTitle">
-  <span className="settingsTitleUpdate">Update Account</span>
-  <div>
-    <span className="settingsTitleDelete" onClick={handleDelete}>
-      Delete Account
-    </span>
-    {user && (
-      <Link className="link" to="/mypost" style={{ marginLeft: "24px" }}>
-        My Posts
-      </Link>
-    )}
-  </div>
-</div>
-
+        <div className="settingsTitle">
+          <span className="settingsTitleUpdate">Update Account</span>
+          <div>
+            <span className="settingsTitleDelete" onClick={handleDelete}>
+              Delete Account
+            </span>
+           
+            {user && (
+  <Link  className="link-profile"to={`/user/${user.username}`} style={{ marginLeft: "24px" }} >
+     My Profile
+  </Link>
+)}
+          </div>
+        </div>
 
         <form className="settingsForm" onSubmit={handleSubmit}>
-          {/* <label>Profile Picture</label> */}
+      <label className="profile-label">Profile Picture</label>
           <div className="settingsPP">
-            {/* <img
-             src={file ? URL.createObjectURL(file) : PF+username: parsedUserDetails.}
-              alt=""
-            /> */}
-
-            {/* <label htmlFor="fileInput">
-              <i className="settingsPPIcon far fa-user-circle"></i>{" "}
-            </label>
+            <img
+              src={
+                file
+                  ? URL.createObjectURL(file)
+                  : user?.profilePic
+                  ? PF + user.profilePic
+                  : "/default-profile.png"
+              }
+              alt="profile"
+            />
+            <label htmlFor="fileInput" className="uploadProfileBtn">
+  📷 Choose Profile Image
+</label>
             <input
               id="fileInput"
               type="file"
               style={{ display: "none" }}
               className="settingsPPInput"
               onChange={(e) => setFile(e.target.files[0])}
-            /> */}
+            />
           </div>
-          <label>Username</label>
+
+        <label className="username-label">Username</label>
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             type="text"
             placeholder="Enter Username"
-            name="name"
+            name="username"
+            required
           />
-          <label>Email</label>
+ <label className="email-label">Email</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Enter Email"
             name="email"
+            required
           />
-          <label>Password</label>
+
+          <label className="password-label">Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Password"
             name="password"
           />
-          <button className="settingsSubmitButton" type="submit">
-            Update
-          </button>
+          <label className="bio-label">Bio</label>
+<textarea
+  value={bio}
+  onChange={(e) => setBio(e.target.value)}
+  placeholder="Write something about yourself..."
+  rows="4"
+  style={{ resize: "vertical" }}
+/>
 
-          {/* {!success && (
-            <span
-              style={{ color: "green", textAlign: "center", marginTop: "20px" }}
-            >
-              Profile has been updated...
-            </span>
-          )} */}
+
+
+          <button className="settingsSubmitButton" type="submit" disabled={loading}>
+            {loading ? "Updating..." : "Update"}
+          </button>
         </form>
       </div>
-      
     </div>
   );
 }
+
 export default injectModels(["auth"])(Settings);

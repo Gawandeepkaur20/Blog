@@ -7,7 +7,7 @@ import EmojiPicker from "emoji-picker-react";
 const PostInteraction = ({ post: initialPost, postId, currentUser }) => {
   const [post, setPost] = useState(initialPost || null);
   const [comment, setComment] = useState("");
-  const [showPicker, setShowPicker] = useState(false); // FIXED: missing state
+  const [showPicker, setShowPicker] = useState(false); 
 
   const handleReact = async (action) => {
     try {

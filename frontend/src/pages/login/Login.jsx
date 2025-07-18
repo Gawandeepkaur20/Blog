@@ -18,32 +18,33 @@ const Login = (props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-   const handleEmail = (e) => {
-    const val = e.target.value.trim();
-    setEmail(val);
-    if (!val) {
-      setErrorEmail("Email is required.");
-      triggerAlert("Email is required.");
-    } else if (!emaillogin.test(val)) {
-      setErrorEmail("Invalid email format.");
-      triggerAlert("Invalid email format.");
-    } else setErrorEmail("");
-  };
+  const handleEmail = () => {
+  const val = email.trim();
+  if (!val) {
+    setErrorEmail("Email is required.");
+    triggerAlert("Email is required.");
+  } else if (!emaillogin.test(val)) {
+    setErrorEmail("Invalid email format.");
+    triggerAlert("Invalid email format.");
+  } else {
+    setErrorEmail("");
+  }
+};
 
-  const handlePassword = (e) => {
-    const val = e.target.value.trim();
-    setPassword(val);
-    if (!val) {
-      setErrorPassword("Password is required.");
-      triggerAlert("Password is required.");
-    } else if (!passwordlogin.test(val)) {
-      setErrorPassword(
-        "Password must be at least 8 characters, include an uppercase letter, a number, and a special character."
-      );
-      triggerAlert("Password format is invalid.");
-    } else setErrorPassword("");
-  };
-
+  const handlePassword = () => {
+  const val = password.trim();
+  if (!val) {
+    setErrorPassword("Password is required.");
+    triggerAlert("Password is required.");
+  } else if (!passwordlogin.test(val)) {
+    setErrorPassword(
+      "Password must be at least 8 characters, include an uppercase letter, a number, and a special character."
+    );
+    triggerAlert("Password format is invalid.");
+  } else {
+    setErrorPassword("");
+  }
+};
   const triggerAlert = (message) => {
     setAlertMessage(message);
     setShowAlert(true);
@@ -106,10 +107,11 @@ const Login = (props) => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                onChange={handleEmail}
-                value={email}
-                required
-                autoFocus
+               onChange={(e) => setEmail(e.target.value.trim())}
+  onBlur={handleEmail}  // <- only trigger validation when user leaves the field
+  value={email}
+  required
+  autoFocus
               />
             </div>
             {errorEmail && <p className="error">{errorEmail}</p>}
@@ -118,9 +120,10 @@ const Login = (props) => {
               <input
                 type="password"
                 placeholder="Enter your password"
-                onChange={handlePassword}
-                value={password}
-                required
+                onChange={(e) => setPassword(e.target.value.trim())}
+  onBlur={handlePassword}  // <- only trigger validation when user leaves the field
+  value={password}
+  required
               />
             </div>
             {errorPassword && <p className="error">{errorPassword}</p>}

@@ -18,6 +18,12 @@ const userSchema=new mongoose.Schema(  {
       type: String,
       
     },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+bio: { type: String, default: "" },
+profilePic: { type: String },
+bio: { type: String, default: ""},
+
   },
   { timestamps: true })
 

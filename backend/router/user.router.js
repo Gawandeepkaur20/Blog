@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express.Router();
 const bcrypt = require("bcrypt");
+const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const { Router } = require("express");
 const authentication = require("../middlewares/authentication");
+
 
 // SIGNUP
 app.post("/signup", async (req, res) => {
@@ -58,6 +60,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+
 // LOGIN
 app.post("/login", async (req, res) => {
   let { email, password } = req.body;
@@ -77,6 +80,7 @@ app.post("/login", async (req, res) => {
       const token = jwt.sign(
   {
     userId: user._id,
+    
     user_: {
       id: user._id,
       name: user.name,
@@ -98,55 +102,83 @@ app.post("/login", async (req, res) => {
 });
 
 //UPDATE
-app.put("/update/:id",authentication,async (req,res)=>{
-    if (req.userId === req.params.id) {
-        if (req.body.password) {
-          const salt = await bcrypt.genSalt(5);
-          req.body.password = await bcrypt.hash(req.body.password, salt);
-        }
-        try {
-          const user=await User.findById(req.params.id);
-          console.log(user,'user for updation');
-          user.username=req.body.username;
-          user.email=req.body.email;
-          user.password=req.body.password;
+// app.put("/update/:id",authentication,async (req,res)=>{
+//     if (req.userId === req.params.id) {
+//         if (req.body.password) {
+//           const salt = await bcrypt.genSalt(5);
+//           req.body.password = await bcrypt.hash(req.body.password, salt);
+//         }
+//         try {
+//           const user=await User.findById(req.params.id);
+//           console.log(user,'user for updation');
+//           user.username=req.body.username;
+//           user.email=req.body.email;
+//           user.profilePic=req.body.profilePic;
+//           user.password=req.body.password;
+//           user.bio=req.body.bio;
 
           
-          const updatedUser = await user.save();
-          console.log(updatedUser,'user is updated');
-          res.status(200).json({success:true,status:200,updatedUser});
-        } catch (err) {
-          res.status(500).json(err);
-        }
-      } else {
-        res.status(401).json("You can update only your account!");
-      }
+//           const updatedUser = await user.save();
+//           console.log(updatedUser,'user is updated');
+//           res.status(200).json({success:true,status:200,updatedUser});
+//         } catch (err) {
+//           res.status(500).json(err);
+//         }
+//       } else {
+//         res.status(401).json("You can update only your account!");
+//       }
 
-})
+// })
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/profiles/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
-// app.put("/update/", authentication, async (req, res) => {
-//   if (req.userId === req.params.id) {
-//     if (req.body.password) {
-//       const salt = await bcrypt.genSalt(5);
-//       req.body.password = await bcrypt.hash(req.body.password, salt);
-//     }
-//     try {
-//       const updatedUser = await User.findByIdAndUpdate(
-//         req.params.id,
-//         { $set: req.body },
-//         { new: true }
-//       );
-//       res.status(200).json({success:true,updatedUser,msg:'user details updated successfully'});
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   } else {
-//     res.status(401).json({success:false ,msg:"You can update only your account!"});
-//   }
-//   console.log("BODY:", req.body);
-//   console.log("PARAMS.ID:", req.params.id);
-//   console.log("USERID FROM TOKEN:", req.userId);
-// });
+const upload = multer({ storage });
+
+app.put("/update/:id", authentication, upload.single("file"), async (req, res) => {
+  const userId = req.params.id;
+  const { username, email, password, bio } = req.body;
+
+  try {
+    if (req.user.id !== userId) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    const updateFields = {};
+
+    if (username) updateFields.username = username;
+    if (email) updateFields.email = email;
+    if (bio) updateFields.bio = bio;
+
+    // ✅ Handle new profile picture if uploaded
+    if (req.file) {
+      updateFields.profilePic = req.file.filename;
+    }
+
+    if (password) {
+      const salt = await bcrypt.genSalt(5);
+      updateFields.password = await bcrypt.hash(password, salt);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: updateFields },
+      { new: true }
+    );
+
+    res.status(200).json({ success: true, user: updatedUser });
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
 
 
 app.get("/", authentication, async (req, res) => {
@@ -173,16 +205,138 @@ app.get("/", authentication, async (req, res) => {
 });
 
 
-// app.get("/",authentication, async (req, res) => {
-//     try {
-//       const user = await User.findById(req.userId);
-//       const { password, ...others } = user._doc;
-//       res.status(200).json({success:true,others});
-//     } catch (err) {
-//       res.status(500).json({success:false,msg:"err"});
-//     }
-//   });
 
+app.post("/:id/follow", authentication, async (req, res) => {
+  try {
+    const userToFollow = await User.findById(req.params.id);
+    const currentUser = await User.findById(req.userId);
+
+    if (!userToFollow.followers.includes(req.userId)) {
+      userToFollow.followers.push(req.userId);
+      currentUser.following.push(userToFollow._id);
+      await userToFollow.save();
+      await currentUser.save();
+      res.status(200).json({ success: true, message: "Followed successfully" });
+    } else {
+      res.status(400).json({ message: "Already following" });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error following user", error: err.message });
+  }
+});
+
+// POST /api/user/:id/unfollow
+app.post("/:id/unfollow", authentication, async (req, res) => {
+  try {
+    const userToUnfollow = await User.findById(req.params.id);
+    const currentUser = await User.findById(req.userId);
+
+    userToUnfollow.followers = userToUnfollow.followers.filter(
+      (id) => id.toString() !== req.userId
+    );
+    currentUser.following = currentUser.following.filter(
+      (id) => id.toString() !== req.params.id
+    );
+
+    await userToUnfollow.save();
+    await currentUser.save();
+
+    res.status(200).json({ success: true, message: "Unfollowed successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error unfollowing user", error: err.message });
+  }
+});
+// GET /api/user/:username/followers-count
+app.get("/:username/followers-count", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    res.json({
+      followers: user.followers.length,
+      following: user.following.length,
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching counts" });
+  }
+});
+
+// ✅ Get user profile by username + user's posts
+// GET user profile by username
+app.get("/profile/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Also fetch posts created by this user
+    const posts = await Post.find({ username: req.params.username });
+
+    res.status(200).json({
+      profile: {
+        _id: user._id,
+        username: user.username,
+        bio: user.bio,
+        profilePic: user.profilePic,
+        followers: user.followers,
+        following: user.following,
+      },
+      posts,
+    });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+// GET followers by username
+app.get("/:username/followers", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const followers = await User.find({ _id: { $in: user.followers } }).select("username profilePic _id");
+    res.json({ followers });
+  } catch (err) {
+    console.error("Error fetching followers:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// GET following by username
+app.get("/:username/following", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const following = await User.find({ _id: { $in: user.following } }).select("username profilePic _id");
+    res.json({ following });
+  } catch (err) {
+    console.error("Error fetching following:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+// app.put("/update/:id", authentication, async (req, res) => {
+//   const userId = req.params.id;
+//   const { bio } = req.body;
+
+//   try {
+//     // Optional: ensure only user can edit their own bio
+//     if (req.user.id !== userId) {
+//       return res.status(403).json({ success: false, message: "Unauthorized" });
+//     }
+
+//     const updatedUser = await User.findByIdAndUpdate(
+//       userId,
+//       { $set: { bio } },
+//       { new: true }
+//     );
+
+//     res.status(200).json({ success: true, user: updatedUser });
+//   } catch (err) {
+//     console.error("Error updating bio:", err);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// });
   
 app.delete("/delete/:id", authentication, async (req, res) => {
   if (req.userId === req.params.id) {

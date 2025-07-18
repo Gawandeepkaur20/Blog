@@ -1,17 +1,14 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router-dom";
 
 function ProtectRoutes() {
-  const access_token = localStorage.getItem("access_token");
-  const getAuth = localStorage.getItem("isAuthenticated");
-  // console.log(getAuth);
-  // console.log(access_token);
-  if (access_token && getAuth) {
+  const token = localStorage.getItem("access_token");
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
+  if (token && isAuthenticated) {
     return <Outlet />;
   } else {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("isAuthenticated");
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 }
 

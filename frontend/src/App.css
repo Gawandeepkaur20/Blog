@@ -1,4 +1,296 @@
-body, html {
+/* body, html {
   margin: 0;
   padding: 0;
+    position: -webkit-sticky;
+} */
+ body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
+
+#root {
+  flex: 1;
+}
+
+/* Custom background and text */
+.Toastify__toast--success {
+  background: #0f5132;
+  color: #B9B2A8;
+  font-family: "Wix Madefor Display", serif;
+  border-left: 5px solid #198754;
+}
+
+.Toastify__toast--error {
+  background: #842029;
+  color: #B9B2A8;
+font-family: "Wix Madefor Display", serif;
+  border-left: 5px solid #dc3545;
+}
+
+/* Custom icon or padding */
+.Toastify__toast-icon {
+  margin-right: 8px;
+}
+
+/* Overall toast box */
+.Toastify__toast {
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 14px;
+}
+/* .footer {
+  background-color: #3b2f2f;
+  color: #fff;
+  padding: 3rem 0;
+  font-family: 'Wix Madefor Display', serif;
+  margin-top: 6rem;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.footer-logo h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.footer-logo p {
+  font-size: 1rem;
+  max-width: 500px;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.newsletter {
+  margin-top: 1rem;
+}
+
+.newsletter p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #bbb;
+}
+
+.newsletter-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  width: 250px;
+  font-size: 0.9rem;
+}
+
+.newsletter-form button {
+  background-color: #b9b2a8;
+  color: #3b2f2f;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #a2998e;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 180px;
+}
+
+.footer-column h4 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: #aaa;
+  border-top: 1px solid #555;
+  padding-top: 1rem;
+}
+.footer {
+  background-color: #3b2f2f;
+  color: #fff;
+  padding: 3rem 0;
+  font-family: 'Wix Madefor Display', serif;
+  margin-top: 6rem;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.footer-logo h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.footer-logo p {
+  font-size: 1rem;
+  max-width: 500px;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.newsletter {
+  margin-top: 1rem;
+}
+
+.newsletter p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #bbb;
+}
+
+.newsletter-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.newsletter-form input[type="email"] {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  width: 250px;
+  font-size: 0.9rem;
+}
+
+.newsletter-form button {
+  background-color: #b9b2a8;
+  color: #3b2f2f;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #a2998e;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.footer-column {
+  flex: 1;
+  min-width: 180px;
+}
+
+.footer-column h4 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #ccc;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: #aaa;
+  border-top: 1px solid #555;
+  padding-top: 1rem;
+} */
+
+
+ 

@@ -1,5 +1,9 @@
+import { toast } from "react-toastify";
 import { Auth } from "../../../Service/index";
 import * as CONSTANTS from "./constant";
+
+
+
 
 // LOGIN ACTION
 export const login = (object) => async (dispatch) => {
@@ -23,7 +27,24 @@ export const login = (object) => async (dispatch) => {
         payload: { token, user },
       });
 
-      alert("Login successful");
+//       toast.success(
+//   <div style={{ display: "flex", flexDirection: "column" }}>
+//     <strong>Login Successful!</strong>
+//     <small>Welcome back 🎉</small>
+//   </div>
+
+// );
+toast.success("Login Successful!", {
+  position: "top-left",
+  autoClose: 3000,
+  style: {
+    marginTop: "50px",
+    backgroundColor: "#B9B2A8", // match theme
+    color: "#fff",              // white text
+    fontFamily: "'Wix Madefor Display', serif"
+  }
+});
+
       return response;
     } else {
       console.log("Invalid user:Login Failed");
@@ -65,7 +86,17 @@ export const updateUser = (id, updateData) => async (dispatch) => {
         type: CONSTANTS.UPDATE_SUCCESS,
         payload: { user: response.data },
       });
-      alert("Profile updated successfully");
+     
+      toast.success("Account updated successfully!", {
+                 
+            position: "top-left",
+            style: {
+              marginTop: "50px",
+              backgroundColor: "#B9B2A8",
+              color: "#3b2f2f",
+              fontFamily: "'Wix Madefor Display', serif"
+            }
+          });    
       console.log(response, "user data after updating");
       return response;
     } else {
