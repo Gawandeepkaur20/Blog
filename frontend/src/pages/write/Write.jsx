@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { BlogContext } from "../../context/BlogContext";
 import { toast } from "react-toastify";
+import Footer from "./../../components/footer";
 
 
 function Write(props) {
@@ -387,7 +388,7 @@ const fetchUnsplashImage = async (prompt) => {
   
 
   return (
-   
+  
   <div className="write">
     {file && <img className="writeImg" src={URL.createObjectURL(file)} alt="upload preview" />}
     {!file && generatedImage && <img className="writeImg" src={generatedImage} alt="AI generated" />}
@@ -538,7 +539,7 @@ const fetchUnsplashImage = async (prompt) => {
      
     </form>
   
-
+{/* <Footer /> */}
 
 </div>
         

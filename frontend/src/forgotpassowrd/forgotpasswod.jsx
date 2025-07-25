@@ -20,7 +20,7 @@ export default function ForgotPassword() {
       </form>
 
       <p style={{ marginTop: '15px' }}>
-        <Link className="link"to="/">Back to Login</Link>
+        <Link className="link"to="/login">Back to Login</Link>
       </p>
     </div>
     </div>

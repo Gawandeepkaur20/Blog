@@ -5,6 +5,7 @@ import { fetchUserProfile } from "./Redux/slices/userSlice";
 import { format } from "timeago.js";
 import axios from "axios";
 import {jwtDecode }  from "jwt-decode";
+
 import "./userProfile.css";
 
 function UserProfile() {
@@ -81,6 +82,7 @@ function UserProfile() {
   if (!user) return <div>No user data.</div>;
 
   return (
+    <div className="page-wrapper">
     <div className="user-profile-container">
       <div className="profile-header-row">
   <div className="profile-left">
@@ -173,8 +175,11 @@ function UserProfile() {
           </div>
         )}
       </div>
+      
+    </div>
     </div>
   );
 }
+
 
 export default UserProfile;

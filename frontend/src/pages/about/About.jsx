@@ -1,7 +1,9 @@
 import "./about.css";
 
+
 export default function About() {
   return (
+  
     <div className="about">
       <div className="aboutContent">
         <h1>About Zenticle</h1>
@@ -39,6 +41,7 @@ export default function About() {
 
         <p className="thanks">Thanks for visiting Zenticle — Happy Writing!</p>
       </div>
+    
     </div>
   );
 }
