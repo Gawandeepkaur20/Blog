@@ -174,7 +174,9 @@ GEMINI_API_KEY=AIzaSyCHWtePP1vQQjJuszDt8A1RG5eprVG-iJM
 👩‍💻 Author
 
 **Gawandeep Kaur**
+
 B.Tech Computer Science Engineering
+
 Full-Stack Web Developer
 
 
