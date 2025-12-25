@@ -84,27 +84,36 @@ A full-stack, feature-rich blogging web application built using **React.js**, **
 ---
 
 ## 📂 Project Structure
-
 ```
-blog-app/
+Blog/
 │
-├── client/                 # React frontend
+├── backend/
+│   ├── middlewares/          # Authentication & custom middleware
+│   ├── models/               # Mongoose schemas (User, Post, Comment, etc.)
+│   ├── public/
+│   │   └── images/           # Uploaded blog & profile images
+│   ├── router/               # Express route handlers
+│   │   ├── auth.js
+│   │   ├── post.js
+│   │   ├── user.js
+│   │   └── comment.js
+│   ├── .env                  # Environment variables
+│   ├── .gitignore
+│   ├── index.js              # Server entry point
+│   ├── package.json
+│   └── package-lock.json
+│
+├── frontend/                 # React frontend 
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
 │   │   ├── redux/
 │   │   ├── services/
 │   │   └── App.js
-│
-├── server/                 # Node.js backend
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   └── index.js
+│   ├── package.json
+│   └── package-lock.json
 │
 └── README.md
-```
 
 ---
 
@@ -113,14 +122,14 @@ blog-app/
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/Gawandeep20/Blog.git
+cd Blog
 ```
 
 ### 2️⃣ Frontend Setup
 
 ```bash
-cd client
+cd frontend
 npm install
 npm start
 ```
@@ -128,7 +137,7 @@ npm start
 ### 3️⃣ Backend Setup
 
 ```bash
-cd server
+cd backend
 npm install
 npm run dev
 ```
