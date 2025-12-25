@@ -145,10 +145,10 @@ npm run dev
 ### 4️⃣ Environment Variables (`.env`)
 
 ```env
+MONGODB_URL=mongodb://localhost:27017/
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-GEMINI_API_KEY=your_gemini_api_key
+JWT_SECRET=12345
+GEMINI_API_KEY=AIzaSyCHWtePP1vQQjJuszDt8A1RG5eprVG-iJM
 ```
 
 
