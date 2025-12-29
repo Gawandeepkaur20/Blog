@@ -34,7 +34,10 @@ const corsOptions = {
 
 
 // ✅ Middleware
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
 app.use(express.json());
 
 // ✅ Serve uploaded images statically
@@ -105,14 +108,24 @@ app.post("/upload/profile", uploadProfileImage.single("file"), (req, res) => {
 
 
 // ✅ MongoDB connection and start server
+// mongoose
+//   .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => {
+//     console.log("✅ MongoDB connected");
+//     app.listen(PORT, () => {
+//       console.log(`🚀 Server running at http://localhost:${PORT}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error("❌ MongoDB connection error:", err);
+//   });
+
 mongoose
-  .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URL)
   .then(() => {
     console.log("✅ MongoDB connected");
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running at http://localhost:${PORT}`);
-    });
+    app.listen(PORT, () =>
+      console.log(`🚀 Server running on port ${PORT}`)
+    );
   })
-  .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
-  });
+  .catch((err) => console.error(err));
