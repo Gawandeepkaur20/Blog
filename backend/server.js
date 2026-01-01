@@ -121,7 +121,7 @@ app.post("/upload/profile", uploadProfileImage.single("file"), (req, res) => {
 //   });
 
 mongoose
-  .connect(MONGO_URL)
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB connected");
     app.listen(PORT, () =>
