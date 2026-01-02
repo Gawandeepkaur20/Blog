@@ -145,7 +145,7 @@ app.put("/update/:id", authentication, upload.single("file"), async (req, res) =
   const { username, email, password, bio } = req.body;
 
   try {
-    if (req.user.id !== userId) {
+    if (req.userId !== userId) {
       return res.status(403).json({ success: false, message: "Unauthorized" });
     }
 
