@@ -9,12 +9,15 @@ import { toast } from "react-toastify";
 
 function Settings(props) {
   const navigate = useNavigate();
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const PF = `${API_BASE_URL}/images/profiles/`;
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
+
 
 
   const { user, getUser } = props.auth;
@@ -80,10 +83,22 @@ function Settings(props) {
     const updatedUser = { username, email, password ,bio};
 
     try {
-      if (file) {
-        const data = new FormData();
-        data.append("file", file);
-        const res = await axios.post("http://localhost:5000/upload/profile", data);
+       if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const token = localStorage.getItem("access_token");
+
+        const res = await axios.post(
+          `${API_BASE_URL}/upload/profile`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         if (res.data.success) {
           updatedUser.profilePic = res.data.filename;
           toast.success("Profile picture updated successfully!", {   
@@ -96,17 +111,18 @@ function Settings(props) {
       }
     });
         }
+        
       }
-
+       
       const response = await props.auth.update(user._id, updatedUser);
       if (response && response.success === true) {
-           
+           await getUser();
         navigate("/");
       }
     } catch (error) {
       console.error("Update error:", error);
      
-     toast.alert("Something went wrong. Try again.", {
+     toast.error("Something went wrong. Try again.", {
       position: "top-left",
       style: {
         marginTop: "50px",
@@ -120,7 +136,8 @@ function Settings(props) {
     }
   };
 
-  const PF = "http://localhost:5000/images/profiles/";
+
+
 
   return (
     <div className="settings">

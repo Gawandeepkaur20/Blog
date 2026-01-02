@@ -17,7 +17,9 @@ const SEOSuggester = ({ blogContent, onTitleSuggest }) => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.post("http://localhost:5000/api/seo-suggestions", {
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+      const res = await axios.post(`${API_BASE_URL}/api/seo-suggestions`, {
         content: blogContent,
       });
 

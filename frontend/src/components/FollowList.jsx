@@ -9,11 +9,13 @@ function FollowList() {
   const [selectedTab, setSelectedTab] = useState("followers");
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 
   useEffect(() => {
     const fetchFollows = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/user/${username}/${selectedTab}`);
+        const res = await axios.get(`${API_BASE_URL}/user/${username}/${selectedTab}`);
         setUsers(res.data[selectedTab]);
       } catch (err) {
         console.error(`Error fetching ${selectedTab}:`, err);
@@ -61,7 +63,7 @@ function FollowList() {
               <div className="user-info">
                 <Link to={`/user/${user.username}`} className="follow-user-link">
                   <img
-                    src={user.profilePic ? `http://localhost:5000/images/profiles/${user.profilePic}` : "/default-profile.png"}
+                    src={user.profilePic ? `${API_BASE_URL}/images/profiles/${user.profilePic}` : "/default-profile.png"}
                     alt="profile"
                     className="follow-user-avatar"
                   />

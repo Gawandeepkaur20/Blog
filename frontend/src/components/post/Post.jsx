@@ -20,12 +20,14 @@ export default function Post({
 
 
   console.log("Post props:", username, _id);
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
   const [post, setPost] = useState(null);
   // Determine correct image source
   const imageSrc = photo
     ? photo.startsWith("http")
       ? photo
-      : `http://localhost:5000/images/blog/${photo}`
+      : `${API_BASE_URL}/${photo}`
     : "/fallback.jpg"; // Add fallback image in public folder
 
   return (

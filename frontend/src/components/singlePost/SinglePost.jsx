@@ -31,7 +31,9 @@ function SinglePost(props) {
   const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
   const [updateMode, setUpdateMode] = useState(false);
-  const pf = "http://localhost:5000/images/blog/";
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+  const pf = "${API_BASE_URL}/images/blog/";
 
   const { user, getUser } = props.auth;
   const shareUrl = window.location.href;
@@ -179,7 +181,7 @@ useEffect(() => {
 
       // If the user hasn't viewed this post yet
       if (!viewedPosts.includes(id)) {
-        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/post/${id}/view`);
+        await axios.put(`${API_BASE_URL}/post/${id}/view`);
         viewedPosts.push(id);
         localStorage.setItem("viewedPosts", JSON.stringify(viewedPosts));
       }
@@ -193,6 +195,9 @@ useEffect(() => {
 
 
 if (loading || !post) return ;
+
+
+
 if (error) {
   return (
     <div className="error-state">
@@ -213,7 +218,7 @@ return (
   src={
     post.photo?.startsWith("http")
       ? post.photo
-      :`http://localhost:5000/images/blog/${post.photo}`
+      :`${API_BASE_URL}/${post.photo}`
   }
   alt="Post"
 />

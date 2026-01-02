@@ -35,7 +35,9 @@ const Footer = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/newsletter/subscribe", { email });
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+      const res = await axios.post(`${API_BASE_URL}/newsletter/subscribe`, { email });
       const message = res.data.message || "";
 
       if (message.toLowerCase().includes("already subscribed")) {

@@ -154,3 +154,131 @@ export const image = async (token,formData) => {
     return { success: false, message: error.message };
   }
 };
+// import { API_ENDPOINTS } from "./Endpoint";
+// import axios from "axios";
+// import { ResponseEnum } from "./constant";
+
+// const REACT_APP_API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+// if (!REACT_APP_API_BASE_URL) {
+//   console.error("REACT_APP_API_BASE_URL is not defined");
+// }
+
+// /* =========================
+//    GET ALL POSTS (PUBLIC)
+// ========================= */
+// export const GetAllPosts = async () => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.GET_ALL_POST}`;
+//     const response = await axios.get(url);
+//     return response.data;
+//   } catch (error) {
+//     console.error("Getting all posts error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };
+
+// /* =========================
+//    CREATE POST (PROTECTED)
+// ========================= */
+// export const CreatePost = async (postData, token) => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.CREATE_POST}`;
+//     const response = await axios.post(url, postData, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Creating post error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };
+
+// /* =========================
+//    GET MY POSTS (PROTECTED)
+// ========================= */
+// export const GetMyPost = async (token) => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.GET_MY_POST}`;
+//     const response = await axios.get(url, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response.data.msg;
+//   } catch (error) {
+//     console.error("Getting my posts error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };
+
+// /* =========================
+//    GET POST BY ID / SLUG (PUBLIC)
+// ========================= */
+// export const GetPostById = async (identifier) => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.GET_POST_BY_ID}${identifier}`;
+//     const response = await axios.get(url);
+//     return response.data.msg;
+//   } catch (error) {
+//     console.error("Getting post by id error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };
+
+// /* =========================
+//    DELETE POST (PROTECTED)
+// ========================= */
+// export const DeletPostById = async (_id, token) => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.DELETE_POST_BY_ID}${_id}`;
+//     const response = await axios.delete(url, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Deleting post error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };
+
+// /* =========================
+//    UPDATE POST (PROTECTED)
+// ========================= */
+// export const UpdatePostById = async (_id, updatedPost, token) => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.UPDATE_POST_BY_ID}${_id}`;
+//     const response = await axios.put(url, updatedPost, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Updating post error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };
+
+// /* =========================
+//    IMAGE UPLOAD (PROTECTED)
+// ========================= */
+// export const image = async (token, formData) => {
+//   try {
+//     const url = `${REACT_APP_API_BASE_URL}${API_ENDPOINTS.IMAGE}`;
+//     const response = await axios.post(url, formData, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//         "Content-Type": "multipart/form-data",
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error("Image upload error:", error);
+//     return { success: false, message: error.message };
+//   }
+// };

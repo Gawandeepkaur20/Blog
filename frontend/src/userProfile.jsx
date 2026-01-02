@@ -14,9 +14,10 @@ function UserProfile() {
   const { profile: user, posts, loading, error } = useSelector((state) => state.user);
   const [isFollowing, setIsFollowing] = useState(false);
   const [userId, setUserId] = useState(null);
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-  const PF = "http://localhost:5000/images/profiles/";
-  const BLOG_IMG = "http://localhost:5000/images/blog/";
+ const PF = `${API_BASE_URL}/images/profiles/`;
+const BLOG_IMG = `${API_BASE_URL}/images/blog/`;
 
   // Decode user ID from JWT token
   useEffect(() => {
@@ -65,7 +66,7 @@ function UserProfile() {
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      const url = `http://localhost:5000/user/${user._id}/${isFollowing ? "unfollow" : "follow"}`;
+      const url = `${API_BASE_URL}/user/${user._id}/${isFollowing ? "unfollow" : "follow"}`;
       const res = await axios.post(url, {}, config);
 
       if (res.data.success) {
