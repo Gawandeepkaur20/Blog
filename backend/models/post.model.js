@@ -11,6 +11,11 @@ const commentSchema = new mongoose.Schema({
 const PostSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, unique: true },
+     slug: {
+    type: String,
+    unique: true,
+    required: true,
+  },
     tags: { type: [String], required: true, unique: true },
     desc: { type: String, required: true },
     photo: { type: String },

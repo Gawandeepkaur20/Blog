@@ -3,6 +3,9 @@ const app = express.Router();
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
 const authentication = require("../middlewares/authentication");
+const slugify = require("slugify");
+
+
 
 
 
@@ -123,6 +126,11 @@ app.post("/create", authentication, async (req, res) => {
       .status(400)
       .json({ success: false, message: "Title and descrition are required" });
   }
+    const slug = `${slugify(title, {
+    lower: true,
+    strict: true,
+  })}-${Date.now()}`;
+
   let imagePath = "";
     if (photo?.startsWith("http")) {
       // External image like Unsplash
@@ -137,6 +145,7 @@ app.post("/create", authentication, async (req, res) => {
     title,
     desc,
     tags,
+    slug,
     username:req.user?.username,
     userId: req.userId,
     photo:imagePath,
