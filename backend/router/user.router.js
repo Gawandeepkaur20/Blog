@@ -129,55 +129,121 @@ app.post("/login", async (req, res) => {
 //       }
 
 // })
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images/profiles/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/images/profiles/");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-app.put("/update/:id", authentication, upload.single("file"), async (req, res) => {
-  const userId = req.params.id;
-  const { username, email, password, bio } = req.body;
+// app.put("/update/:id", authentication, upload.single("file"), async (req, res) => {
+//   const userId = req.params.id;
+//   const { username, email, password, bio } = req.body;
 
+//   try {
+//     if (req.userId !== userId) {
+//       return res.status(403).json({ success: false, message: "Unauthorized" });
+//     }
+
+//     const updateFields = {};
+
+//     if (username) updateFields.username = username;
+//     if (email) updateFields.email = email;
+//     if (bio) updateFields.bio = bio;
+
+//     // ✅ Handle new profile picture if uploaded
+//     if (req.file) {
+//       updateFields.profilePic = req.file.filename;
+//     }
+
+//     if (password) {
+//       const salt = await bcrypt.genSalt(5);
+//       updateFields.password = await bcrypt.hash(password, salt);
+//     }
+
+//     const updatedUser = await User.findByIdAndUpdate(
+//       userId,
+//       { $set: updateFields },
+//       { new: true }
+//     );
+
+//     res.status(200).json({ success: true, user: updatedUser });
+//   } catch (err) {
+//     console.error("Error updating user:", err);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// });
+
+// app.put("/update/:id", authentication, async (req, res) => {
+//   const userId = req.params.id;
+//   const { username, email, password, bio, profilePic } = req.body;
+
+//   if (req.userId !== userId) {
+//     return res.status(403).json({ success: false, message: "Unauthorized" });
+//   }
+
+//   const updateFields = {};
+
+//   if (username) updateFields.username = username;
+//   if (email) updateFields.email = email;
+//   if (bio) updateFields.bio = bio;
+
+//   // ✅ THIS IS THE KEY FIX
+//   if (profilePic) {
+//     updateFields.profilePic = profilePic; // Cloudinary URL
+//   }
+
+//   if (password) {
+//     const salt = await bcrypt.genSalt(5);
+//     updateFields.password = await bcrypt.hash(password, salt);
+//   }
+
+//   const updatedUser = await User.findByIdAndUpdate(
+//     userId,
+//     { $set: updateFields },
+//     { new: true }
+//   );
+
+//   res.status(200).json({ success: true, user: updatedUser });
+// });
+app.put("/update/:id", authentication, async (req, res) => {
   try {
-    if (req.userId !== userId) {
-      return res.status(403).json({ success: false, message: "Unauthorized" });
+    if (req.userId !== req.params.id) {
+      return res.status(403).json({ success: false });
     }
 
-    const updateFields = {};
+    const { username, email, password, bio, profilePic } = req.body;
 
-    if (username) updateFields.username = username;
-    if (email) updateFields.email = email;
-    if (bio) updateFields.bio = bio;
+    const updateData = {
+      username,
+      email,
+      bio,
+    };
 
-    // ✅ Handle new profile picture if uploaded
-    if (req.file) {
-      updateFields.profilePic = req.file.filename;
+    if (profilePic) {
+      updateData.profilePic = profilePic; // FULL URL ONLY
     }
 
     if (password) {
-      const salt = await bcrypt.genSalt(5);
-      updateFields.password = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(password, salt);
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $set: updateFields },
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateData },
       { new: true }
     );
 
-    res.status(200).json({ success: true, user: updatedUser });
+    res.json({ success: true, user });
   } catch (err) {
-    console.error("Error updating user:", err);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.status(500).json({ success: false });
   }
 });
-
 
 
 
