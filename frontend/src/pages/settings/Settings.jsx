@@ -18,6 +18,24 @@ function Settings(props) {
   const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
 
+// const uploadToCloudinary = async (file) => {
+//   const formData = new FormData();
+//   formData.append("file", file);
+//   formData.append("upload_preset", "YOUR_UPLOAD_PRESET"); // unsigned
+//   formData.append("cloud_name", "YOUR_CLOUD_NAME");
+
+//   const res = await fetch(
+//     "https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/image/upload",
+//     {
+//       method: "POST",
+//       body: formData,
+//     }
+//   );
+
+//   const data = await res.json();
+//   return data.secure_url;
+// };
+
 
 
   const { user, getUser } = props.auth;
@@ -100,7 +118,9 @@ function Settings(props) {
           }
         );
         if (res.data.success) {
-          updatedUser.profilePic = res.data.filename;
+          // updatedUser.profilePic = res.data.filename;
+         updatedUser.profilePic = res.data.url;
+
           toast.success("Profile picture updated successfully!", {   
       position: "top-left",
       style: {
@@ -136,6 +156,32 @@ function Settings(props) {
     }
   };
 
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   setLoading(true);
+
+//   const updatedUser = { username, email, bio };
+
+//   if (file) {
+//     const formData = new FormData();
+//     formData.append("file", file);
+
+//     const token = localStorage.getItem("access_token");
+
+//     const uploadRes = await axios.post(
+//       `${API_BASE_URL}/user/upload/profile`,
+//       formData,
+//       { headers: { Authorization: `Bearer ${token}` } }
+//     );
+
+//     updatedUser.profilePic = uploadRes.data.url; // ✅ URL
+//   }
+
+//   await props.auth.update(user._id, updatedUser);
+//   await getUser();
+//   navigate("/");
+// };
+
 
 
 
@@ -161,7 +207,7 @@ function Settings(props) {
         <form className="settingsForm" onSubmit={handleSubmit}>
       <label className="profile-label">Profile Picture</label>
           <div className="settingsPP">
-            <img
+            {/* <img
               src={
                 file
                   ? URL.createObjectURL(file)
@@ -170,7 +216,21 @@ function Settings(props) {
                   : "/default-profile.png"
               }
               alt="profile"
-            />
+            /> */}
+            {/* <img
+  src={user?.profilePic || "/default-profile.png"}
+  alt="profile"
+/> */}
+{/* <img
+  src={resolveProfileImage(user?.profilePic)}
+  alt="profile"
+/> */}
+<img
+  src={user?.profilePic || "/default-profile.png"}
+  alt="profile"
+/>
+
+
             <label htmlFor="fileInput" className="uploadProfileBtn">
   📷 Choose Profile Image
 </label>

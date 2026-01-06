@@ -50,7 +50,7 @@ font-family: 'Wix Madefor Dispaly',serif;
    font-family: 'Wix Madefor Dispaly',serif;
 }
 
-.profile-pic {
+/* .profile-pic {
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -58,7 +58,19 @@ font-family: 'Wix Madefor Dispaly',serif;
   margin-bottom: 10px;
   border: 3px solid #b4845c;
    font-family: 'Wix Madefor Dispaly',serif;
+} */
+
+.profile-pic-large {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
+.profile-left {
+  overflow: visible;
+}
+
 
 .follow-info {
   margin-top: 10px;

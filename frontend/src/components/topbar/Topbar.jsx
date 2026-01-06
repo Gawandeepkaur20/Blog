@@ -11,7 +11,8 @@ function Topbar(props) {
   const isAuthenticated = !!user;
   const [desc, setDesc] = useState("");
   const [selectedLang, setSelectedLang] = useState("");
-  const PF = "http://localhost:5000/images/profiles/";
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const PF = `${API_BASE_URL}/images/profiles/`;
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");

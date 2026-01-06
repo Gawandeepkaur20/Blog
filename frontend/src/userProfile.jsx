@@ -18,6 +18,12 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
  const PF = `${API_BASE_URL}/images/profiles/`;
 const BLOG_IMG = `${API_BASE_URL}/images/blog/`;
+const resolveProfileImage = (profilePic) => {
+  if (!profilePic) return "/default-profile.png";
+  if (profilePic.startsWith("http")) return profilePic;
+  if (profilePic.startsWith("/images")) return `${API_BASE_URL}${profilePic}`;
+  return `${API_BASE_URL}/images/profiles/${profilePic}`;
+};
 
   // Decode user ID from JWT token
   useEffect(() => {
@@ -87,11 +93,34 @@ const BLOG_IMG = `${API_BASE_URL}/images/blog/`;
     <div className="user-profile-container">
       <div className="profile-header-row">
   <div className="profile-left">
-    <img
+    {/* <img
       src={user?.profilePic ? PF + user.profilePic : "/default-profile.png"}
       alt="profile"
       className="profile-pic-large"
-    />
+    /> */}
+    {/* <img
+  src={
+    user?.profilePic
+      ? user.profilePic.startsWith("http")
+        ? user.profilePic
+        : `${API_BASE_URL}/images/profiles/${user.profilePic}`
+      : "/default-profile.png"
+  }
+  alt="profile"
+  className="profile-pic-large"
+/> */}
+{/* <img
+  src={resolveProfileImage(user?.profilePic)}
+  alt="profile"
+  className="profile-pic-large"
+/> */}
+
+<img
+  src={user?.profilePic || "/default-profile.png"}
+  alt="profile"
+  className="profile-pic-large"
+/>
+
  
   <div className="username-row">
       <h2 className="username">{user.username}</h2>
@@ -150,7 +179,7 @@ const BLOG_IMG = `${API_BASE_URL}/images/blog/`;
           <div className="posts-Grid">
             {posts.map((post) => (
               <div className="post-card" key={post._id}>
-                <img
+                {/* <img
                   className="postImg"
                   src={
                     post.photo?.startsWith("http")
@@ -158,7 +187,17 @@ const BLOG_IMG = `${API_BASE_URL}/images/blog/`;
                       : `${BLOG_IMG}${post.photo}`
                   }
                   alt="blog"
-                />
+                /> */}
+                <img
+  className="postImg"
+  src={
+    post.photo?.startsWith("http")
+      ? post.photo
+      : `${API_BASE_URL}${post.photo}`
+  }
+  alt="blog"
+/>
+
                 <div className="postinfo">
                   <h3 className="post-title">
                     <Link to={`/post/${post._id}`} className="post-titleLink">

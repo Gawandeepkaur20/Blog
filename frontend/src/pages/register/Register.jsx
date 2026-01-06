@@ -19,7 +19,7 @@ const Register = (props) => {
   const [errorLname, setErrorLname] = useState("");
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,7 +35,7 @@ const Register = (props) => {
       formData.append("file", selectedFile);
 
       try {
-        const res = await axios.post("http://localhost:5000/upload/profile", formData);
+        const res = await axios.post(`${API_BASE_URL}/upload/profile`, formData);
         const filename = res.data.filePath.split("/").pop();
         setProfilePicPath(filename);
       } catch (err) {
