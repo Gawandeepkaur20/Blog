@@ -36,7 +36,7 @@ function Write(props) {
 const [showImagePromptInput, setShowImagePromptInput] = useState(false);
 const [customImagePrompt, setCustomImagePrompt] = useState("");
 const [showPrompt, setShowPrompt] = useState(false);
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const togglePromptBox = () => {
   setShowPrompt((prev) => !prev);
 };
@@ -67,7 +67,7 @@ const togglePromptBox = () => {
 
     try {
       setUploading(true);
-      const res = await axios.post("http://localhost:5000/upload/blog", data);
+      const res = await axios.post(`${API_BASE_URL}/upload/blog`, data);
       setUploading(false);
       return res.data.filename;
     } catch (err) {
@@ -172,7 +172,7 @@ const handleGenerateBlog = async () => {
   setError("");
 
   try {
-    const res = await axios.post("http://localhost:5000/api/generate-blog", { topic });
+    const res = await axios.post(`${API_BASE_URL}/api/generate-blog`, { topic });
     const blog = res.data.blog || "";
 
     setGeneratedBlog(blog);
@@ -225,7 +225,7 @@ const handleGenerateBlog = async () => {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/seo-suggestions", {
+      const res = await axios.post(`${API_BASE_URL}/api/seo-suggestions`, {
         content: generatedBlog,
       });
 

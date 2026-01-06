@@ -1,232 +1,160 @@
-import React from "react";
-import "./settings.css";
+const express = require("express");
+const mongoose = require("mongoose");
+require("dotenv").config();
+const path = require("path");
+const cors = require("cors");
+const multer = require("multer");
+const fs = require("fs");
+const newsletterRoutes = require('./router/newsletter.route');
+const user = require("./router/user.router");
+const category = require("./router/category.route");
+const post = require("./router/post.routes");
+const seoRoutes = require("./router/seo");
+const blogRoutes = require("./router/blogroute");
 
-import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { injectModels } from "../../Redux/injectModel";
-import axios from "axios";
-import { toast } from "react-toastify";
+const app = express();
 
-function Settings(props) {
-  const navigate = useNavigate();
-    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  const PF = `${API_BASE_URL}/images/profiles/`;
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [bio, setBio] = useState("");
+// ✅ Port and Mongo URI
+const PORT = process.env.PORT || 5000;
+const MONGO_URL = process.env.MONGODB_URL;
 
-
-
-  const { user, getUser } = props.auth;
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token && !user) {
-      getUser();
-    } else if (user) {
-      setUsername(user.username || "");
-      setEmail(user.email || "");
-       setBio(user.bio || "");
+// ✅ CORS config
+const allowedOrigins = ["http://localhost:3000"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.error("Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
     }
-  }, [user]);
-
-  const handleDelete = async (e) => {
-    e.preventDefault();
-    if (!window.confirm("Are you sure you want to delete your account?")) 
-      
-      return;
-
-    try {
-      if (!user || !user._id) return;
-
-      const response = await props.auth.deleteUser(user._id);
-      if (response && response.success !== false) {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("isAuthenticated");
-        toast.success("Account deleted successfully!", {   
-      position: "top-left",
-      style: {
-        marginTop: "50px",
-        backgroundColor: "#B9B2A8",
-        color: "#3b2f2f",
-        fontFamily: "'Wix Madefor Display', serif"
-      }
-    });
-        navigate("/signup");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!user) {
-      toast.error("You must be logged in to update your account.", {  
-      style: {
-        marginTop: "50px",
-        backgroundColor: "#B9B2A8",
-        color: "#3b2f2f",
-        fontFamily: "'Wix Madefor Display', serif"
-      }
-    });
-      navigate("/login");
-
-      return;
-    }
-
-    setLoading(true);
-
-    const updatedUser = { username, email, password ,bio};
-
-    try {
-       if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const token = localStorage.getItem("access_token");
-
-        const res = await axios.post(
-          `${API_BASE_URL}/upload/profile`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        if (res.data.success) {
-          updatedUser.profilePic = res.data.filename;
-          toast.success("Profile picture updated successfully!", {   
-      position: "top-left",
-      style: {
-        marginTop: "50px",
-        backgroundColor: "#B9B2A8",
-        color: "#3b2f2f",
-        fontFamily: "'Wix Madefor Display', serif"
-      }
-    });
-        }
-        
-      }
-       
-      const response = await props.auth.update(user._id, updatedUser);
-      if (response && response.success === true) {
-           await getUser();
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Update error:", error);
-     
-     toast.error("Something went wrong. Try again.", {
-      position: "top-left",
-      style: {
-        marginTop: "50px",
-        backgroundColor: "#B9B2A8",
-        color: "#3b2f2f",
-        fontFamily: "'Wix Madefor Display', serif"
-      }
-    });
-    } finally {
-      setLoading(false);
-    }
-  };
+  },
+};
 
 
 
+// ✅ Middleware
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
+app.use(express.json());
 
-  return (
-    <div className="settings">
-      
-      <div className="settingsWrapper">
-        <div className="settingsTitle">
-          <span className="settingsTitleUpdate">Update Account</span>
-          <div>
-            <span className="settingsTitleDelete" onClick={handleDelete}>
-              Delete Account
-            </span>
-           
-            {user && (
-  <Link  className="link-profile"to={`/user/${user.username}`} style={{ marginLeft: "24px" }} >
-     My Profile
-  </Link>
-)}
-          </div>
-        </div>
+// ✅ Serve uploaded images statically
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+app.use('/newsletter', newsletterRoutes);
 
-        <form className="settingsForm" onSubmit={handleSubmit}>
-      <label className="profile-label">Profile Picture</label>
-          <div className="settingsPP">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : user?.profilePic
-                  ? PF + user.profilePic
-                  : "/default-profile.png"
-              }
-              alt="profile"
-            />
-            <label htmlFor="fileInput" className="uploadProfileBtn">
-  📷 Choose Profile Image
-</label>
-            <input
-              id="fileInput"
-              type="file"
-              style={{ display: "none" }}
-              className="settingsPPInput"
-              onChange={(e) => setFile(e.target.files[0])}
-            />
-          </div>
+// ✅ API Routes
+app.use("/user", user);
+app.use("/category", category);
+app.use("/post", post);
+app.use("/api", seoRoutes);
+app.use("/api", blogRoutes);
 
-        <label className="username-label">Username</label>
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            type="text"
-            placeholder="Enter Username"
-            name="username"
-            required
-          />
- <label className="email-label">Email</label>
-          <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            placeholder="Enter Email"
-            name="email"
-            required
-          />
+const cloudinary = require("cloudinary").v2;
+// const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
-          <label className="password-label">Password</label>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            placeholder="Password"
-            name="password"
-          />
-          <label className="bio-label">Bio</label>
-<textarea
-  value={bio}
-  onChange={(e) => setBio(e.target.value)}
-  placeholder="Write something about yourself..."
-  rows="4"
-  style={{ resize: "vertical" }}
-/>
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "profiles",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+  },
+});
+
+const upload = multer({ storage });
 
 
+// ✅ Ensure upload folders exist
+const ensureDirExists = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+};
 
-          <button className="settingsSubmitButton" type="submit" disabled={loading}>
-            {loading ? "Updating..." : "Update"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
+const blogImagesDir = path.join(__dirname, "public/images/blog");
+const profileImagesDir = path.join(__dirname, "public/images/profiles");
+ensureDirExists(blogImagesDir);
+ensureDirExists(profileImagesDir);
 
-export default injectModels(["auth"])(Settings);
+// ✅ Multer setups
+const blogStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, blogImagesDir),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "_")),
+});
+
+const profileStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, profileImagesDir),
+  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "_")),
+});
+
+const uploadBlogImage = multer({ storage: blogStorage });
+const uploadProfileImage = multer({ storage: profileStorage });
+
+// ✅ Blog image upload endpoint
+app.post("/upload/blog", uploadBlogImage.single("file"), (req, res) => {
+  if (!req.file) return res.status(400).json({ success: false, message: "No file uploaded" });
+  res.status(200).json({
+    success: true,
+    message: "Blog image uploaded successfully",
+    filename: req.file.filename,
+    filePath: `/images/blog/${req.file.filename}`,
+  });
+});
+
+
+// ✅ Profile picture upload endpoint
+app.post("/upload/profile", uploadProfileImage.single("file"), (req, res) => {
+  if (!req.file)
+    return res.status(400).json({ success: false, message: "No file uploaded" });
+
+  // res.status(200).json({
+  //   success: true,
+  //   message: "Profile image uploaded successfully",
+  //   filename: req.file.filename,
+  //   filePath: `/images/profiles/${req.file.filename}`,
+  // });
+   res.json({
+    success: true,
+    url: req.file.path, // ✅ Cloudinary URL
+  });
+
+});
+
+// app.post("/upload/profile", upload.single("file"), (req, res) => {
+//   res.status(200).json({
+//     success: true,
+//     url: req.file.path, // Cloudinary gives full https URL
+//   });
+// });
+
+
+// ✅ MongoDB connection and start server
+// mongoose
+//   .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => {
+//     console.log("✅ MongoDB connected");
+//     app.listen(PORT, () => {
+//       console.log(`🚀 Server running at http://localhost:${PORT}`);
+//     });
+//   })
+//   .catch((err) => {
+//     console.error("❌ MongoDB connection error:", err);
+//   });
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB connected");
+    app.listen(PORT, () =>
+      console.log(`🚀 Server running on port ${PORT}`)
+    );
+  })
+  .catch((err) => console.error(err));
