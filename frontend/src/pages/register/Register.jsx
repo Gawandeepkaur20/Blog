@@ -39,6 +39,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
         const filename = res.data.filePath.split("/").pop();
         setProfilePicPath(filename);
       } catch (err) {
+         console.log(err.response?.data || err.message); 
         toast.error("Image upload failed. Try again.");
       }
     }

@@ -102,81 +102,81 @@ app.post("/login", async (req, res) => {
 });
 
 //UPDATE
-// app.put("/update/:id",authentication,async (req,res)=>{
-//     if (req.userId === req.params.id) {
-//         if (req.body.password) {
-//           const salt = await bcrypt.genSalt(5);
-//           req.body.password = await bcrypt.hash(req.body.password, salt);
-//         }
-//         try {
-//           const user=await User.findById(req.params.id);
-//           console.log(user,'user for updation');
-//           user.username=req.body.username;
-//           user.email=req.body.email;
-//           user.profilePic=req.body.profilePic;
-//           user.password=req.body.password;
-//           user.bio=req.body.bio;
+app.put("/update/:id",authentication,async (req,res)=>{
+    if (req.userId === req.params.id) {
+        if (req.body.password) {
+          const salt = await bcrypt.genSalt(5);
+          req.body.password = await bcrypt.hash(req.body.password, salt);
+        }
+        try {
+          const user=await User.findById(req.params.id);
+          console.log(user,'user for updation');
+          user.username=req.body.username;
+          user.email=req.body.email;
+          user.profilePic=req.body.profilePic;
+          user.password=req.body.password;
+          user.bio=req.body.bio;
 
           
-//           const updatedUser = await user.save();
-//           console.log(updatedUser,'user is updated');
-//           res.status(200).json({success:true,status:200,updatedUser});
-//         } catch (err) {
-//           res.status(500).json(err);
-//         }
-//       } else {
-//         res.status(401).json("You can update only your account!");
-//       }
+          const updatedUser = await user.save();
+          console.log(updatedUser,'user is updated');
+          res.status(200).json({success:true,status:200,updatedUser});
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      } else {
+        res.status(401).json("You can update only your account!");
+      }
 
-// })
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "public/images/profiles/");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
+})
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/profiles/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
-// const upload = multer({ storage });
+const upload = multer({ storage });
 
-// app.put("/update/:id", authentication, upload.single("file"), async (req, res) => {
-//   const userId = req.params.id;
-//   const { username, email, password, bio } = req.body;
+app.put("/update/:id", authentication, upload.single("file"), async (req, res) => {
+  const userId = req.params.id;
+  const { username, email, password, bio } = req.body;
 
-//   try {
-//     if (req.userId !== userId) {
-//       return res.status(403).json({ success: false, message: "Unauthorized" });
-//     }
+  try {
+    if (req.userId !== userId) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
 
-//     const updateFields = {};
+    const updateFields = {};
 
-//     if (username) updateFields.username = username;
-//     if (email) updateFields.email = email;
-//     if (bio) updateFields.bio = bio;
+    if (username) updateFields.username = username;
+    if (email) updateFields.email = email;
+    if (bio) updateFields.bio = bio;
 
-//     // ✅ Handle new profile picture if uploaded
-//     if (req.file) {
-//       updateFields.profilePic = req.file.filename;
-//     }
+    // ✅ Handle new profile picture if uploaded
+    if (req.file) {
+      updateFields.profilePic = req.file.filename;
+    }
 
-//     if (password) {
-//       const salt = await bcrypt.genSalt(5);
-//       updateFields.password = await bcrypt.hash(password, salt);
-//     }
+    if (password) {
+      const salt = await bcrypt.genSalt(5);
+      updateFields.password = await bcrypt.hash(password, salt);
+    }
 
-//     const updatedUser = await User.findByIdAndUpdate(
-//       userId,
-//       { $set: updateFields },
-//       { new: true }
-//     );
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: updateFields },
+      { new: true }
+    );
 
-//     res.status(200).json({ success: true, user: updatedUser });
-//   } catch (err) {
-//     console.error("Error updating user:", err);
-//     res.status(500).json({ success: false, message: "Server error" });
-//   }
-// });
+    res.status(200).json({ success: true, user: updatedUser });
+  } catch (err) {
+    console.error("Error updating user:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
 
 // app.put("/update/:id", authentication, async (req, res) => {
 //   const userId = req.params.id;
@@ -210,40 +210,40 @@ app.post("/login", async (req, res) => {
 
 //   res.status(200).json({ success: true, user: updatedUser });
 // });
-app.put("/update/:id", authentication, async (req, res) => {
-  try {
-    if (req.userId !== req.params.id) {
-      return res.status(403).json({ success: false });
-    }
+// app.put("/update/:id", authentication, async (req, res) => {
+//   try {
+//     if (req.userId !== req.params.id) {
+//       return res.status(403).json({ success: false });
+//     }
 
-    const { username, email, password, bio, profilePic } = req.body;
+//     const { username, email, password, bio, profilePic } = req.body;
 
-    const updateData = {
-      username,
-      email,
-      bio,
-    };
+//     const updateData = {
+//       username,
+//       email,
+//       bio,
+//     };
 
-    if (profilePic) {
-      updateData.profilePic = profilePic; // FULL URL ONLY
-    }
+//     if (profilePic) {
+//       updateData.profilePic = profilePic; // FULL URL ONLY
+//     }
 
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      updateData.password = await bcrypt.hash(password, salt);
-    }
+//     if (password) {
+//       const salt = await bcrypt.genSalt(10);
+//       updateData.password = await bcrypt.hash(password, salt);
+//     }
 
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { $set: updateData },
-      { new: true }
-    );
+//     const user = await User.findByIdAndUpdate(
+//       req.params.id,
+//       { $set: updateData },
+//       { new: true }
+//     );
 
-    res.json({ success: true, user });
-  } catch (err) {
-    res.status(500).json({ success: false });
-  }
-});
+//     res.json({ success: true, user });
+//   } catch (err) {
+//     res.status(500).json({ success: false });
+//   }
+// });
 
 
 
