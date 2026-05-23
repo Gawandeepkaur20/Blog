@@ -15,11 +15,12 @@ function Topbar(props) {
   const PF = `${API_BASE_URL}/images/profiles/`;
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token && !user) {
-      getUser();
-    }
-  }, [user, getUser]);
+  const token = localStorage.getItem("access_token");
+  if (token) {
+    getUser();
+  }
+}, [getUser]);
+
 
   const handleLogout = () => {
     props.auth.logout();
@@ -28,7 +29,7 @@ function Topbar(props) {
 
   const handleTranslate = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/translate', {
+      const response = await axios.post('${API_BASE_URL}/api/translate', {
         text: desc,
         to: selectedLang
       });
@@ -38,6 +39,15 @@ function Topbar(props) {
       alert("Translation failed. Try again.");
     }
   };
+const resolveProfileImage = (profilePic) => {
+  if (!profilePic) {
+    return "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg";
+  }
+  if (profilePic.startsWith("http")) {
+    return profilePic; // Cloudinary
+  }
+  return `${API_BASE_URL}/images/profiles/${profilePic}`; // fallback
+};
 
   return (
     <div className="top">
@@ -88,13 +98,11 @@ function Topbar(props) {
               </span>
               <img
   className="topImg"
-  src={
-    user.profilePic
-      ? PF + user.profilePic
-      : "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg"
-  }
+  src={resolveProfileImage(user?.profilePic)}
   alt="profile"
 />
+
+
             </Link>
           ) : (
             <div className="loading-placeholder">Loading...</div>

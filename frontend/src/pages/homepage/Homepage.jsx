@@ -23,20 +23,39 @@ function Homepage(props) {
 };
 
   const loadMorePosts = async () => {
-    setLoading(true);
-    try {
-      const response = await props.posts.getAllPosts({ page, limit: LIMIT });
-      if (response.length < LIMIT) {
-        setHasMore(false);
-      }
-      setData((prev) => [...prev, ...response]);
-      setPage((prev) => prev + 1);
-    } catch (error) {
-      console.log("Failed to get data", error);
-    } finally {
-      setLoading(false);
+  setLoading(true);
+
+  try {
+    const response = await props.posts.getAllPosts({
+      page,
+      limit: LIMIT,
+    });
+
+    console.log("Response:", response);
+
+    // safely extract posts array
+    const posts =
+      response?.posts ||
+      response?.data?.posts ||
+      [];
+
+    if (posts.length < LIMIT) {
+      setHasMore(false);
     }
-  };
+
+    setData((prev) => [...prev, ...posts]);
+
+    setPage((prev) => prev + 1);
+
+  } catch (error) {
+    console.log("Failed to get data", error);
+
+    // prevent crash
+    setData((prev) => [...prev]);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     loadMorePosts(); // initial load

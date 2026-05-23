@@ -13,7 +13,7 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const [profilePicPath, setProfilePicPath] = useState("");
+  // const [profilePicPath, setProfilePicPath] = useState("");
 
   const [errorFname, setErrorFname] = useState("");
   const [errorLname, setErrorLname] = useState("");
@@ -25,25 +25,25 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
-  const handleFileChange = async (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
+  // const handleFileChange = async (e) => {
+  //   const selectedFile = e.target.files[0];
+  //   setFile(selectedFile);
 
-    if (selectedFile) {
-      setPreview(URL.createObjectURL(selectedFile));
-      const formData = new FormData();
-      formData.append("file", selectedFile);
+  //   if (selectedFile) {
+  //     setPreview(URL.createObjectURL(selectedFile));
+  //     const formData = new FormData();
+  //     formData.append("file", selectedFile);
 
-      try {
-        const res = await axios.post(`${API_BASE_URL}/upload/profile`, formData);
-        const filename = res.data.filePath.split("/").pop();
-        setProfilePicPath(filename);
-      } catch (err) {
-         console.log(err.response?.data || err.message); 
-        toast.error("Image upload failed. Try again.");
-      }
-    }
-  };
+  //     try {
+  //       const res = await axios.post(`${API_BASE_URL}/upload/profile`, formData);
+  //       const filename = res.data.filePath.split("/").pop();
+  //       setProfilePicPath(filename);
+  //     } catch (err) {
+  //        console.log(err.response?.data || err.message); 
+  //       toast.error("Image upload failed. Try again.");
+  //     }
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,19 +69,19 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
       valid = false;
     }
 
-    if (!profilePicPath) {
-     toast.warning(" Please upload a profile picture!", {
-  position: "top-left",
-  autoClose: 3000,
-  style: {
-    marginTop: "50px",
-    backgroundColor: "#B9B2A8", // match theme
-    color:  "#3b2f2f",              // white text
-    fontFamily: "'Wix Madefor Display', serif"
-  }
-});
-      valid = false;
-    }
+//     if (!profilePicPath) {
+//      toast.warning(" Please upload a profile picture!", {
+//   position: "top-left",
+//   autoClose: 3000,
+//   style: {
+//     marginTop: "50px",
+//     backgroundColor: "#B9B2A8", // match theme
+//     color:  "#3b2f2f",              // white text
+//     fontFamily: "'Wix Madefor Display', serif"
+//   }
+// });
+    //   valid = false;
+    // }
 
     if (!valid) return;
 
@@ -90,7 +90,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
         username: `${fname} ${lname}`,
         email,
         password,
-        profilePic: profilePicPath,
+        // profilePic: profilePicPath,
       };
 
       const res = await props.auth.register(payload);
@@ -160,12 +160,12 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
           <input type="password" placeholder="Password" onChange={(e) => { setPassword(e.target.value); setErrorPassword(""); }} />
           {errorPassword && <p className="error">{errorPassword}</p>}
 
-  
+{/*   
           <input type="file" id="profilePicInput" accept="image/*" onChange={handleFileChange} hidden />
           {preview && <img src={preview} alt="Profile Preview" className="preview-img" />}
        <label htmlFor="profilePicInput" className="upload-btn">
     📸 Choose Profile Picture
-  </label>
+  </label> */}
           <label className="terms">
             <input type="checkbox" required /> I agree to the{" "}
             <a className="link-term" href="#">terms and conditions</a>
@@ -208,6 +208,6 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
       </div>
     </div>
   );
-};
 
+}
 export default injectModels(["auth"])(Register);

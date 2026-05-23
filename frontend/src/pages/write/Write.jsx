@@ -172,9 +172,11 @@ const handleGenerateBlog = async () => {
   setError("");
 
   try {
-    const res = await axios.post(`${API_BASE_URL}/api/generate-blog`, { topic });
+    const res = await axios.post(`${API_BASE_URL}/blog/generate-blog`, { topic });
     const blog = res.data.blog || "";
-
+console.log(
+`${API_BASE_URL}/blog/generate-blog`
+);
     setGeneratedBlog(blog);
     setDesc(blog);
     setShowSEO(true);
